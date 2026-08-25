@@ -1,0 +1,1800 @@
+<!doctype html>
+<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260825-03-a81342a","C":{"Abril Fatface":"YACgEZbkUVE,0","Alfa Slab One":"YACgEYS9sJU,0","Anton":"YACgEcYqQ-A,0","Archivo":"YAHO2-t-jNE,0","Arial":"YAGyDvJ_4Ts,0","Bebas Neue":"YACgESME5ew,0","Bricolage Grotesque":"YAFyMcdwzpc,0","Canva Sans":"YAFLd8sKbwc,2","Caveat":"YALBs2ploWQ,0","Comic Sans MS":"YAHO2VMiyZo,0","Cormorant Garamond":"YAFdJhX-538,0","Courier New":"YAGzXiGs0_8,0","DM Sans":"YAD1aU3sLnI,0","DM Serif Display":"YAD1aYG82rc,0","Forum":"YACgEcnnqB4,0","Fraunces":"YAEul-FRQw4,0","Georgia":"YAGzXkO0pEM,0","Helvetica Neue":"YAFcf6CtJfI,0","Impact":"YAFcfnjI7Vk,0","Inter":"YAFdJvSyp_k,3","Iowan Old Style":"YAGNIFa8j9o,0","Jacques Francois":"YAHO2a5g66Q,0","JetBrains Mono":"YAFdJksXcAk,0","Libre Baskerville":"YACgEUFdPdA,0","Manrope":"YAHO2b2feC4,0","Merriweather":"YACgEXvHxxs,0","Montserrat":"YADLjI9qxTA,0","Nunito":"YACgEX8C5Gg,0","Oleo Script":"YACgEQQ14jI,0","Phantom Sans":"YAHO2E8Pb88,0","Playfair Display":"YACgEYmuCJE,0","Poppins":"YAFdJjbTu24,1","Press Start 2P":"YAFyGr-8pmQ,0","Quicksand":"YADWjpfPmdk,0","Raleway":"YACgEVg3xZg,0","Segoe UI":"YAHNdRD1Klw,0","Source Sans 3":"YAG4lO1Mj10,0","Spectral":"YAHO2rVUHIM,0","Times New Roman":"YAGzXW3gftg,0","Times":"YAGzXW3gftg,0","Ubuntu":"YACgERDU--Q,0","Work Sans":"YAGXhLOKv44,0","Yellowtail":"YACgEYG4kG4,0","ui-monospace":"YADlN8CFZ8Q,0","ui-sans-serif":"YACkoN-xg4g,0"}}');</script><script src="/_sdk/50d846425a1e5082.telemetry_sdk.js" integrity="sha512-Otbex+ztlVbcEGql0rXGd/3E3ee/hqAntg6DeuUEMG6pIPbXGOSvZbFZVzknAXi1tH/itQ+ijEhOTr2aWj6CXg=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>General Knowledge Quiz</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inclusive+Sans&amp;family=Outfit:wght@400;500;600;700&amp;family=Work+Sans:wght@700&amp;family=Nunito+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+  <style>
+        :root {
+            --pink: #fb64d0;
+            --lime: #e2ef5f;
+            --sky: #59b0f7;
+            --cream: #f4f1e8;
+            --soft-yellow: #FFF5D6;
+            --dark: #1A1A2E;
+        }
+        body { font-family: 'Outfit', sans-serif; }
+        .font-serif { font-family: 'DM Serif Display', serif; }
+        .font-work-sans { font-family: 'Work Sans', sans-serif; }
+        .font-nunito { font-family: 'Nunito Sans', sans-serif; }
+        .font-inclusive { font-family: 'Inclusive Sans', sans-serif; }
+        .btn-primary {
+            background: var(--pink);
+            color: #000;
+            border-radius: 50px;
+            padding: 19.2px 76.8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.15s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .btn-primary:hover { transform: scale(1.03); opacity: 0.92; }
+        .btn-primary:disabled { background: var(--pink); opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-secondary {
+            background: var(--lime);
+            color: #000;
+            border-radius: 50px;
+            padding: 19.2px 76.8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.15s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .btn-secondary:hover { transform: scale(1.03); opacity: 0.92; }
+        .content-wrap {
+            max-width: 720px;
+            width: calc(100% - 24vw);
+            padding: 40px 0;
+            margin-left: 12vw;
+        }
+        .player-setup-stage {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: calc(100 * min(var(--vh, 1vh), 1vh));
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: #41bb71;
+        }
+        .player-setup-wrapper {
+            display: contents;
+        }
+        .player-setup-left {
+            padding: clamp(16px, 3vw, 40px);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(8px, 1.5vh, 16px);
+            justify-content: flex-start;
+            background: #41bb71;
+            overflow: hidden;
+        }
+        .player-setup-left > p:nth-child(2) {
+            margin-bottom: clamp(16px, 2.5vh, 24px);
+        }
+        .player-setup-left > #start-game-btn {
+            margin-top: clamp(20px, 3vh, 32px);
+        }
+        .player-setup-left > * {
+            min-width: 0;
+        }
+        .player-setup-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(24px, 3vh, 48px);
+            background: #41bb71;
+        }
+        .player-setup-right img {
+            width: min(100%, 520px);
+            height: calc(100% - 48px);
+            max-height: calc(100% - 48px);
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            border-radius: 28px;
+            border: 4px solid #000000;
+            flex-shrink: 0;
+        }
+        @media (max-width: 1024px) {
+            .player-setup-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .player-setup-right {
+                display: none;
+            }
+            .player-setup-left {
+                padding: 40px;
+            }
+        }
+        @media (max-width: 640px) {
+            .player-setup-left {
+                padding: 32px 24px;
+            }
+        }
+        .player-count-circle {
+            width: 54.6px;
+            height: 54.6px;
+            border-radius: 50%;
+            border: 3px solid #000000;
+            background: #fff;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .player-count-circle:hover {
+            transform: scale(1.08);
+        }
+        .player-count-circle.selected {
+            background: var(--sky);
+            color: #000000;
+            border-color: #000000;
+        }
+        .player-input-field {
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: 2px solid #f0ebe4;
+            font-size: 0.95rem;
+            width: 100%;
+            font-family: 'Nunito Sans', sans-serif;
+            height: 62.92px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .player-input-field:focus {
+            outline: none;
+            border-color: var(--dark);
+            background: #fff;
+        }
+        #player-names-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .question-wrap {
+            max-width: 1100px;
+            width: calc(100% - 40px);
+            padding: 40px 0 120px 0;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100 * min(var(--vh, 1vh), 1vh));
+        }
+        
+        .question-content-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: clamp(20px, 3vh, 36px);
+            flex: 0 0 auto;
+            margin: auto;
+        }
+        
+        #question-text {
+            margin-bottom: clamp(12px, 2vh, 20px);
+        }
+        
+        #answer-area {
+            width: 100%;
+            max-width: 100%;
+            margin-top: clamp(12px, 2vh, 20px);
+        }
+        
+        #submit-answer-btn {
+            margin-top: clamp(16px, 2.5vh, 24px);
+        }
+        .game-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: calc(100 * min(var(--vh, 1vh), 1vh));
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+        }
+        #question-text {
+            font-family: 'Inclusive Sans', sans-serif;
+            font-size: 48px;
+            line-height: 1.2;
+            max-width: 900px;
+            color: var(--dark);
+            text-align: center !important;
+        }
+        .badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 2px solid var(--sky);
+            background: transparent;
+            color: var(--sky);
+        }
+        .avatar {
+            width: 44px; height: 44px;
+            border-radius: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .progress-track {
+            background: #ddd;
+            border-radius: 50px;
+            height: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: var(--sky);
+            transition: width 0.4s ease;
+        }
+        .option-btn {
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 0;
+            padding: 16px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s, transform 0.1s;
+            text-align: left;
+            width: 100%;
+            font-weight: 500;
+        }
+        .round-1-q1 .option-btn,
+        .round-1-q2 .option-btn,
+        .round-1-q3 .option-btn,
+        .round-1-q4 .option-btn,
+        .round-1-q5 .option-btn,
+        .round-4-q1 .option-btn,
+        .round-4-q2 .option-btn,
+        .round-4-q3 .option-btn,
+        .round-4-q4 .option-btn,
+        .round-4 .option-btn {
+            border-radius: 50px;
+        }
+        .option-btn:hover { border-color: var(--sky); outline: 2px solid var(--sky); }
+        .option-btn.selected { border-color: var(--sky); outline: 2px solid var(--sky); }
+        .option-btn.correct { border-color: #e2ef5f; background: #f7ffa5; }
+        .option-btn.incorrect { border-color: #fb64d0; background: #fac0f0; }
+        .quiz-input {
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            width: 100%;
+            outline: none;
+            font-family: 'Nunito Sans', sans-serif;
+            transition: border-color 0.15s;
+            height: 62.92px;
+            box-sizing: border-box;
+        }
+        .quiz-input:focus { border-color: var(--sky); }
+        #nav-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            z-index: 9999;
+            pointer-events: auto;
+            padding: 0;
+            margin: 0;
+            visibility: hidden;
+        }
+        #nav-controls button {
+            background: #fff;
+            border: 2px solid #ddd;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            pointer-events: auto;
+            padding: 10px 16px;
+            border-radius: 50px;
+            transition: all 0.2s;
+            min-height: 44px;
+        }
+        #nav-controls button:hover:not(:disabled) {
+            border-color: var(--sky);
+            background: #f9f9f9;
+        }
+        #nav-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        #nav-controls.hidden {
+            display: none;
+            visibility: hidden;
+        }
+        #nav-controls:not(.hidden) {
+            visibility: visible;
+        }
+        #reset-btn {
+            position: fixed !important;
+            bottom: 20px !important;
+            left: 20px !important;
+            z-index: 9999 !important;
+            pointer-events: auto !important;
+            margin: 0 !important;
+            top: auto !important;
+            right: auto !important;
+            min-height: 44px !important;
+        }
+        #nav-btn-group {
+            display: flex !important;
+            gap: 10px !important;
+            align-items: center !important;
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            flex-direction: row !important;
+            pointer-events: auto !important;
+            justify-content: flex-end !important;
+            margin: 0 !important;
+            top: auto !important;
+            left: auto !important;
+            z-index: 9999 !important;
+        }
+        @media (max-width: 767px) {
+            #reset-btn {
+                position: fixed !important;
+                bottom: 20px !important;
+                left: 20px !important;
+                display: block !important;
+                z-index: 9999 !important;
+                pointer-events: auto !important;
+                margin: 0 !important;
+                top: auto !important;
+                right: auto !important;
+                min-height: 44px !important;
+                min-width: 44px !important;
+            }
+            #nav-btn-group {
+                position: fixed !important;
+                bottom: 20px !important;
+                right: 20px !important;
+                display: flex !important;
+                gap: 10px !important;
+                flex-direction: row !important;
+                z-index: 9999 !important;
+                pointer-events: auto !important;
+                justify-content: flex-end !important;
+                align-items: center !important;
+                margin: 0 !important;
+                top: auto !important;
+                left: auto !important;
+            }
+            #nav-controls button {
+                padding: 8px 12px;
+                font-size: 0.875rem;
+                min-height: 44px;
+                min-width: 44px;
+            }
+            #reset-btn {
+                padding: 10px !important;
+            }
+        }
+        .start-title {
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            font-size: 88px;
+            max-width: calc(100% - 80px);
+            overflow: visible;
+        }
+        .start-title h1 {
+            line-height: 0.75;
+            margin-top: -20px;
+        }
+        @media (max-width: 767px) {
+            .start-title {
+                top: 24px !important;
+                left: 16px !important;
+                right: 16px !important;
+                max-width: calc(100% - 32px) !important;
+            }
+            .start-title h1 {
+                font-size: clamp(40px, 12vw, 64px);
+                line-height: 0.9;
+                letter-spacing: -0.04em;
+                white-space: normal;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+                margin-top: 0;
+            }
+        }
+        @media (max-width: 640px) {
+            .start-title {
+                max-width: calc(100% - 48px);
+            }
+        }
+        .start-title h2 {
+            line-height: 1.5;
+        }
+        .start-title span,
+        .start-title div,
+        .start-title p {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .round-intro-panel {
+            padding: 32px 72px;
+        }
+        @media (min-width: 768px) {
+            .round-intro-panel {
+                padding: 40px 96px;
+            }
+        }
+        @media (max-width: 640px) {
+            .round-intro-panel {
+                padding: 32px 24px;
+            }
+        }
+        .round-intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
+        }
+        @media (max-width: 767px) {
+            .round-intro-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+            }
+        }
+        .round-intro-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .round-intro-col-left {
+            justify-content: flex-start;
+        }
+        .round-intro-col-middle {
+            justify-content: flex-start;
+        }
+        .round-intro-col-right {
+            justify-content: flex-end;
+        }
+        @media (max-width: 640px) {
+            .start-title {
+                font-size: 64px;
+            }
+            .start-title h1,
+            .start-title h2,
+            .start-title h3 {
+                font-size: 64px !important;
+            }
+        }
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+        }
+        .fade-in { animation: fadeIn 0.35s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .scale-in { animation: scaleIn 0.3s ease forwards; }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        .question-screen-16-9 {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-height: calc(100 * min(var(--vh, 1vh), 1vh));
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+        }
+
+        .question-screen-16-9 > div:first-child {
+            flex-shrink: 0;
+        }
+
+        .question-screen-16-9 > div:last-child {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 767px) {
+            #reset-btn {
+                bottom: max(20px, env(safe-area-inset-bottom)) !important;
+                left: max(20px, env(safe-area-inset-left)) !important;
+            }
+            #nav-btn-group {
+                bottom: max(20px, env(safe-area-inset-bottom)) !important;
+                right: max(20px, env(safe-area-inset-right)) !important;
+            }
+            .player-setup-stage {
+                aspect-ratio: auto;
+                grid-template-columns: 1fr;
+                height: auto;
+                max-height: none;
+            }
+            .player-setup-wrapper {
+                display: contents;
+            }
+            .player-setup-left {
+                width: 100%;
+                padding: 24px;
+                background: #41bb71;
+            }
+            .player-setup-right {
+                display: none;
+            }
+            .question-screen-16-9 {
+                aspect-ratio: auto;
+                max-height: none;
+                height: auto;
+            }
+            .question-screen-16-9 > div:last-child {
+                min-height: auto;
+                overflow: visible;
+                padding: 24px;
+            }
+            #question-text {
+                font-size: 1.5rem;
+            }
+            #answer-area {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                overflow: visible;
+                max-height: none;
+                padding: 12px 0;
+            }
+            .round-intro-grid {
+                flex-direction: column;
+                gap: 24px;
+            }
+            .round-intro-panel {
+                padding: 24px;
+            }
+            [data-template-id="correct-screen-bg"],
+            [data-template-id="incorrect-screen-bg"],
+            [data-template-id="turn-complete-bg"],
+            [data-template-id="scoreboard-screen-bg"],
+            [data-template-id="game-over-screen-bg"] {
+                grid-template-columns: 1fr !important;
+                min-height: auto !important;
+                height: auto !important;
+                gap: 0 !important;
+                flex-direction: column !important;
+            }
+            [data-template-id="correct-screen-bg"] > div:first-child,
+            [data-template-id="turn-complete-bg"] > div:first-child,
+            [data-template-id="scoreboard-screen-bg"] > div:first-child,
+            [data-template-id="game-over-screen-bg"] > div:first-child {
+                flex: 0 0 auto;
+                padding: 24px;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            [data-template-id="correct-screen-bg"],
+            [data-template-id="incorrect-screen-bg"],
+            [data-template-id="turn-complete-bg"],
+            [data-template-id="scoreboard-screen-bg"],
+            [data-template-id="game-over-screen-bg"] {
+                flex-direction: column !important;
+                min-height: calc(100 * min(var(--vh, 1vh), 1vh)) !important;
+                height: auto !important;
+            }
+            [data-template-id="correct-screen-bg"] > div:first-child,
+            [data-template-id="incorrect-screen-bg"] > div:first-child,
+            [data-template-id="turn-complete-bg"] > div:first-child,
+            [data-template-id="scoreboard-screen-bg"] > div:first-child,
+            [data-template-id="game-over-screen-bg"] > div:first-child {
+                flex: 0 0 auto !important;
+                padding: 20px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 100% !important;
+            }
+            [data-template-id="correct-screen-bg"] img,
+            [data-template-id="incorrect-screen-bg"] img,
+            [data-template-id="turn-complete-bg"] img,
+            [data-template-id="scoreboard-screen-bg"] img,
+            [data-template-id="game-over-screen-bg"] img {
+                width: 100% !important;
+                height: auto !important;
+                max-width: 280px !important;
+            }
+            [data-template-id="correct-screen-bg"] > div:last-child,
+            [data-template-id="incorrect-screen-bg"] > div:last-child,
+            [data-template-id="turn-complete-bg"] > div:last-child,
+            [data-template-id="scoreboard-screen-bg"] > div:last-child,
+            [data-template-id="game-over-screen-bg"] > div:last-child {
+                flex: 1 !important;
+                padding: 24px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                width: 100% !important;
+            }
+            [data-template-id="incorrect-heading"] {
+                font-size: 32px !important;
+                color: #fffdf1 !important;
+                font-family: 'Inclusive Sans', sans-serif !important;
+                font-weight: 700 !important;
+                margin-bottom: 12px !important;
+                text-align: center !important;
+            }
+            [data-template-id="incorrect-caption"] {
+                font-size: 14px !important;
+                color: #fffdf1 !important;
+                margin-bottom: 12px !important;
+                text-align: center !important;
+            }
+            [data-template-id="incorrect-answer-display"] {
+                font-size: 18px !important;
+                padding: 12px 20px !important;
+                margin-bottom: 20px !important;
+                background: var(--lime) !important;
+                color: #000000 !important;
+                border-radius: 0 !important;
+                text-align: center !important;
+            }
+            #round-scores-container {
+                max-height: 40vh !important;
+                overflow-y: auto !important;
+            }
+            [data-template-id="correct-screen-bg"] img,
+            [data-template-id="turn-complete-bg"] img,
+            [data-template-id="scoreboard-screen-bg"] img,
+            [data-template-id="game-over-screen-bg"] img {
+                width: 100%;
+                height: auto;
+                max-width: 320px;
+                max-height: 400px;
+            }
+            [data-template-id="incorrect-screen-bg"] img {
+                width: 100% !important;
+                height: auto !important;
+                max-width: 260px !important;
+                max-height: 320px !important;
+            }
+            [data-template-id="correct-heading"],
+            [data-template-id="turn-complete-heading"],
+            [data-template-id="scoreboard-heading"],
+            [data-template-id="game-over-title"] {
+                font-size: 48px !important;
+            }
+            [data-template-id="incorrect-heading"] {
+                font-size: 32px !important;
+                color: #fffdf1 !important;
+                font-family: 'Inclusive Sans', sans-serif !important;
+                font-weight: 700 !important;
+                margin-bottom: 12px !important;
+            }
+            [data-template-id="correct-caption"],
+            [data-template-id="turn-complete-pass-text"] {
+                font-size: 16px !important;
+                margin-bottom: 12px !important;
+            }
+            [data-template-id="incorrect-caption"] {
+                font-size: 14px !important;
+                color: #fffdf1 !important;
+                margin-bottom: 12px !important;
+            }
+            [data-template-id="incorrect-answer-display"] {
+                font-size: 18px !important;
+                padding: 12px 20px !important;
+                margin-bottom: 20px !important;
+                background: var(--lime) !important;
+                color: #000000 !important;
+                border-radius: 0 !important;
+            }
+            [data-template-id="turn-complete-ready-button"] {
+                margin-top: 12px !important;
+            }
+            #nav-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+            #nav-btn-group {
+                width: 100%;
+                justify-content: center;
+            }
+            #nav-controls button {
+                padding: 8px 12px;
+                font-size: 0.875rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .content-wrap {
+                width: calc(100% - 12vw);
+                margin-left: 6vw;
+                padding: 24px 0;
+            }
+            .question-wrap {
+                width: calc(100% - 12vw);
+                margin-left: 6vw;
+                padding: 24px 0;
+            }
+            #question-text {
+                font-size: 1.5rem;
+            }
+            .btn-primary, .btn-secondary { padding: 14px 44.8px; font-size: 1rem; min-height: 44px; }
+            .player-setup-left {
+                padding: 20px 16px;
+            }
+            .round-intro-panel {
+                padding: 20px 16px;
+            }
+            #reset-btn {
+                padding: 10px !important;
+                min-height: 44px !important;
+                min-width: 44px !important;
+            }
+        }
+    </style>
+  <script src="/_sdk/b3bf9e8ac58e6ad6.data_sdk.js" type="text/javascript" integrity="sha512-otc1u9NYq9Ms5Jt//7vmhrrqR5CLPr8Jdgs6741gqniClfLMcfmC+jK/cKuQdhLv6G0esJ/FzaMS9tv0T/vj/Q=="></script>
+  <script src="/_sdk/a27879be4562f807.resizing_sdk.js" type="text/javascript" integrity="sha512-trcxRwz+QLrzK0Dqg95xqVRryR7WtWui2YopXyzOIr3WMde3j/xCRgT63/b/EAg7klDsAOuHzoRgoryhwm8QFw=="></script>
+ </head>
+ <body data-template-id="__page-root" class="w-full" style="background: rgb(255, 253, 241);">
+  <canvas id="confetti-canvas"></canvas>
+  <main id="game-container" class="w-full" style="min-height: calc(100 * min(var(--vh, 1vh), 1vh)); transition: background-color 0.4s ease; padding: 0;">
+   <!-- Dynamic content injected here -->
+  </main><!-- Navigation Controls -->
+  <div id="nav-controls" class="hidden"><button id="reset-btn" data-template-id="nav-reset-button" onclick="resetQuiz()" title="Reset and return to start" style="font-weight: 600; font-style: normal; font-size: 18px;">Reset</button>
+   <div id="nav-btn-group"><button id="back-btn" onclick="goBack()" title="Go to previous question">←</button> <button id="next-btn" onclick="goNext()" title="Go to next question">→</button>
+   </div>
+  </div><!-- Start Screen -->
+  <template id="start-screen-template">
+   <div class="canva-section w-full flex relative" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background-size: cover; background-position: center;">
+    <img data-template-id="landing-hero-bg" class="canva-image absolute inset-0 w-full h-full object-cover" loading="lazy" alt="Landing background">
+    <div class="absolute inset-0" style="background: rgba(0, 0, 0, 0.5);"></div>
+    <div class="start-title" style="position: absolute; top: 40px; left: 40px; z-index: 20;">
+     <h1 data-template-id="headline-word-1" class="canva-text font-inclusive" style="font-size: 126px; font-weight: 700; line-height: 0.75; letter-spacing: -0.06em; color: #fffdf1; margin: 0; padding: 0; margin-top: -20px; white-space: nowrap; overflow: visible;"></h1>
+     <h1 data-template-id="headline-word-2" class="canva-text font-inclusive" style="font-size: 126px; font-weight: 700; line-height: 0.75; letter-spacing: -0.06em; color: #fffdf1; margin: 0; padding: 0; margin-top: -20px; white-space: nowrap; overflow: visible;"></h1>
+     <h1 data-template-id="headline-word-3" class="canva-text font-inclusive" style="font-size: 126px; font-weight: 700; line-height: 0.75; letter-spacing: -0.06em; color: #fffdf1; margin: 0; padding: 0; margin-top: -20px; white-space: nowrap; overflow: visible;"></h1>
+    </div>
+    <div class="w-full md:w-1/2 flex flex-col items-start justify-start px-6 md:px-12 py-8 md:py-12 relative z-10" style="height: calc(100 * min(var(--vh, 1vh), 1vh));"></div>
+    <div class="hidden md:flex md:w-1/2 flex-col items-end justify-end px-6 md:px-12 py-8 md:py-12 relative z-10" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); gap: 32px;">
+     <p data-template-id="start-subtitle" class="canva-text text-lg md:text-xl font-nunito" style="color: #fffdf1; line-height: 1.35; text-align: right;"></p>
+     <div class="flex flex-wrap gap-4" style="justify-content: flex-end;">
+      <button data-template-id="solo-button" class="canva-button btn-primary" style="border: 3px solid #000000;" onclick="startSolo()"></button> <button data-template-id="multi-button" class="canva-button btn-secondary" style="border: 3px solid #000000;" onclick="startMultiplayer()"></button>
+     </div>
+    </div>
+    <div class="md:hidden flex flex-col items-center justify-end px-6 py-6 gap-4 absolute bottom-0 left-0 right-0 z-10" style="width: 100%;">
+     <p data-template-id="start-subtitle" class="canva-text text-base font-nunito text-center" style="color: #fffdf1; line-height: 1.35;"></p>
+     <div class="flex flex-col gap-3 w-full">
+      <button data-template-id="solo-button" class="canva-button btn-primary w-full" style="border: 3px solid #000000;" onclick="startSolo()"></button> <button data-template-id="multi-button" class="canva-button btn-secondary w-full" style="border: 3px solid #000000;" onclick="startMultiplayer()"></button>
+     </div>
+    </div>
+   </div>
+  </template><!-- Player Setup --> <!-- Player Setup -->
+  <template id="player-setup-template">
+   <div class="player-setup-stage">
+    <div class="player-setup-wrapper fade-in">
+     <div class="player-setup-left">
+      <h2 data-template-id="setup-title" class="canva-text font-serif text-2xl md:text-3xl" style="color: #1a1a2e; margin: 0;"></h2>
+      <p data-template-id="setup-subtitle" class="canva-text text-sm md:text-base" style="color: #1a1a2e; margin: 0;"></p><label data-template-id="setup-player-count-label" class="block font-semibold text-xs" style="color: #1a1a2e;" for="player-count-group">Number of Players</label>
+      <div id="player-count-group" class="flex gap-2 flex-wrap" role="radiogroup" aria-label="Number of players"></div>
+      <div id="player-names-container"></div><button id="start-game-btn" data-template-id="setup-start-button" class="canva-button btn-primary w-full" style="padding: 14px 40px; font-size: 1rem; margin: 0; border: 3px solid #000000; height: 62.92px;" disabled="" onclick="startGame()"></button>
+     </div>
+    </div>
+    <div class="player-setup-right">
+     <img data-template-id="player-setup-image" class="canva-image" loading="lazy" alt="Player setup">
+    </div>
+   </div>
+  </template><!-- Round Intro - Round 1 -->
+  <template id="round-1-template">
+   <div class="w-full flex flex-col fade-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--cream);">
+    <div style="height: 68vh; width: 100%; overflow: hidden;">
+     <img data-template-id="round-1-image" class="canva-image w-full h-full object-cover" loading="lazy" alt="Round 1">
+    </div>
+    <div data-template-id="round-1-panel-bg" class="round-intro-panel flex-1 flex flex-col items-center justify-center w-full" style="background: var(--cream);">
+     <div class="round-intro-grid">
+      <div class="round-intro-col round-intro-col-left">
+       <h2 data-template-id="round-1-title" class="canva-text font-serif text-4xl md:text-6xl" style="color: var(--sky); letter-spacing: -0.04em; margin: 0;"></h2>
+       <div data-template-id="round-1-player-indicator" class="flex items-center mt-2" style="gap: 12px; margin: 0;">
+        <p id="current-player-info" class="font-semibold" style="color: #000000; margin: 0; padding: 8px 16px; background: var(--pink); border-radius: 50px; display: inline-block;"></p>
+       </div>
+      </div>
+      <div class="round-intro-col round-intro-col-middle">
+       <p data-template-id="round-1-description" class="canva-text text-lg md:text-xl" style="color: #222; margin: 0;"></p>
+      </div>
+      <div class="round-intro-col round-intro-col-right">
+       <button data-template-id="round-1-button" class="canva-button btn-secondary" onclick="startRound()" style="padding: 22px 70px; font-size: 1.2rem; white-space: nowrap; border: 3px solid #000000;"></button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </template><!-- Round Intro - Round 2 -->
+  <template id="round-2-template">
+   <div class="w-full flex flex-col fade-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--cream);">
+    <div style="height: 68vh; width: 100%; overflow: hidden;">
+     <img data-template-id="round-2-image" class="canva-image w-full h-full object-cover" loading="lazy" alt="Round 2">
+    </div>
+    <div data-template-id="round-2-panel-bg" class="round-intro-panel flex-1 flex flex-col items-center justify-center w-full" style="background: var(--cream);">
+     <div class="round-intro-grid">
+      <div class="round-intro-col round-intro-col-left">
+       <h2 data-template-id="round-2-title" class="canva-text font-serif text-4xl md:text-6xl" style="color: var(--sky); letter-spacing: -0.04em; margin: 0;"></h2>
+       <div data-template-id="round-2-player-indicator" class="flex items-center mt-2" style="gap: 12px; margin: 0;">
+        <p id="current-player-info" class="font-semibold" style="color: #000000; margin: 0; padding: 8px 16px; background: var(--pink); border-radius: 50px; display: inline-block;"></p>
+       </div>
+      </div>
+      <div class="round-intro-col round-intro-col-middle">
+       <p data-template-id="round-2-description" class="canva-text text-lg md:text-xl" style="color: #222; margin: 0;"></p>
+      </div>
+      <div class="round-intro-col round-intro-col-right">
+       <button data-template-id="round-2-button" class="canva-button btn-secondary" onclick="startRound()" style="padding: 22px 70px; font-size: 1.2rem; white-space: nowrap; border: 3px solid #000000;"></button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </template><!-- Round Intro - Round 3 -->
+  <template id="round-3-template">
+   <div class="w-full flex flex-col fade-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--cream);">
+    <div style="height: 68vh; width: 100%; overflow: hidden;">
+     <img data-template-id="round-3-image" class="canva-image w-full h-full object-cover" loading="lazy" alt="Round 3">
+    </div>
+    <div data-template-id="round-3-panel-bg" class="round-intro-panel flex-1 flex flex-col items-center justify-center w-full" style="background: var(--cream);">
+     <div class="round-intro-grid">
+      <div class="round-intro-col round-intro-col-left">
+       <h2 data-template-id="round-3-title" class="canva-text font-serif text-4xl md:text-6xl" style="color: var(--sky); letter-spacing: -0.04em; margin: 0;"></h2>
+       <div data-template-id="round-3-player-indicator" class="flex items-center mt-2" style="gap: 12px; margin: 0;">
+        <p id="current-player-info" class="font-semibold" style="color: #000000; margin: 0; padding: 8px 16px; background: var(--pink); border-radius: 50px; display: inline-block;"></p>
+       </div>
+      </div>
+      <div class="round-intro-col round-intro-col-middle">
+       <p data-template-id="round-3-description" class="canva-text text-lg md:text-xl" style="color: #222; margin: 0;"></p>
+      </div>
+      <div class="round-intro-col round-intro-col-right">
+       <button data-template-id="round-3-button" class="canva-button btn-secondary" onclick="startRound()" style="padding: 22px 70px; font-size: 1.2rem; white-space: nowrap; border: 3px solid #000000;"></button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </template><!-- Round Intro - Round 4 -->
+  <template id="round-4-template">
+   <div class="w-full flex flex-col fade-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--cream);">
+    <div style="height: 68vh; width: 100%; overflow: hidden;">
+     <img data-template-id="round-4-image" class="canva-image w-full h-full object-cover" loading="lazy" alt="Round 4">
+    </div>
+    <div data-template-id="round-4-panel-bg" class="round-intro-panel flex-1 flex flex-col items-center justify-center w-full" style="background: var(--cream);">
+     <div class="round-intro-grid">
+      <div class="round-intro-col round-intro-col-left">
+       <h2 data-template-id="round-4-title" class="canva-text font-serif text-4xl md:text-6xl" style="color: var(--sky); letter-spacing: -0.04em; margin: 0;"></h2>
+       <div data-template-id="round-4-player-indicator" class="flex items-center mt-2" style="gap: 12px; margin: 0;">
+        <p id="current-player-info" class="font-semibold" style="color: #000000; margin: 0; padding: 8px 16px; background: var(--pink); border-radius: 50px; display: inline-block;"></p>
+       </div>
+      </div>
+      <div class="round-intro-col round-intro-col-middle">
+       <p data-template-id="round-4-description" class="canva-text text-lg md:text-xl" style="color: #222; margin: 0;"></p>
+      </div>
+      <div class="round-intro-col round-intro-col-right">
+       <button data-template-id="round-4-button" class="canva-button btn-secondary" onclick="startRound()" style="padding: 22px 70px; font-size: 1.2rem; white-space: nowrap; border: 3px solid #000000;"></button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </template><!-- Question Screen -->
+  <template id="question-screen-template">
+   <div class="question-screen-16-9 fade-in">
+    <div style="width: 100%; padding: 16px 40px; flex-shrink: 0;">
+     <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto;">
+      <span id="question-progress-text" class="canva-text font-nunito font-semibold text-sm" style="color: var(--dark);"></span>
+      <div style="flex: 1; margin: 0 24px;">
+       <div class="progress-track" style="height: 6px;">
+        <div id="question-progress-bar" class="progress-fill" style="width: 0%;"></div>
+       </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px; white-space: nowrap;">
+       <span id="question-score-text" class="canva-text font-nunito font-semibold text-sm" style="color: var(--sky);"></span> <span id="question-category-badge" class="badge font-nunito" style="background: transparent; color: var(--sky); text-transform: uppercase; font-weight: 600; letter-spacing: 0.05em;"></span>
+      </div>
+     </div>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 40px; overflow: hidden;">
+     <div class="question-content-area flex flex-col items-center" style="max-width: 1024px; width: 100%; padding-bottom: clamp(20px, 3vh, 40px);">
+      <h3 id="question-text" class="canva-text font-inclusive" style="color: var(--dark); font-size: 42px;"></h3><!-- Placeholder elements for all round questions for config validation --> <span data-template-id="round-1-q1-question" class="hidden"></span> <span data-template-id="round-1-q1-category" class="hidden"></span> <span data-template-id="round-1-q2-question" class="hidden"></span> <span data-template-id="round-1-q2-category" class="hidden"></span> <span data-template-id="round-1-q3-question" class="hidden"></span> <span data-template-id="round-1-q3-category" class="hidden"></span> <span data-template-id="round-1-q4-question" class="hidden"></span> <span data-template-id="round-1-q4-category" class="hidden"></span> <span data-template-id="round-1-q5-question" class="hidden"></span> <span data-template-id="round-1-q5-category" class="hidden"></span> <span data-template-id="round-2-q1-question" class="hidden"></span> <span data-template-id="round-2-q1-category" class="hidden"></span> <span data-template-id="round-2-q2-question" class="hidden"></span> <span data-template-id="round-2-q2-category" class="hidden"></span> <span data-template-id="round-2-q3-question" class="hidden"></span> <span data-template-id="round-2-q3-category" class="hidden"></span> <span data-template-id="round-2-q4-question" class="hidden"></span> <span data-template-id="round-2-q4-category" class="hidden"></span> <span data-template-id="round-2-q5-question" class="hidden"></span> <span data-template-id="round-2-q5-category" class="hidden"></span> <span data-template-id="round-3-q1-question" class="hidden"></span> <span data-template-id="round-3-q1-category" class="hidden"></span> <span data-template-id="round-3-q2-question" class="hidden"></span> <span data-template-id="round-3-q2-category" class="hidden"></span> <span data-template-id="round-3-q3-question" class="hidden"></span> <span data-template-id="round-3-q3-category" class="hidden"></span> <span data-template-id="round-3-q4-question" class="hidden"></span> <span data-template-id="round-3-q4-category" class="hidden"></span> <span data-template-id="round-4-q1-question" class="hidden"></span> <span data-template-id="round-4-q1-category" class="hidden"></span> <span data-template-id="round-4-q2-question" class="hidden"></span> <span data-template-id="round-4-q2-category" class="hidden"></span> <span data-template-id="round-4-q3-question" class="hidden"></span> <span data-template-id="round-4-q3-category" class="hidden"></span> <span data-template-id="round-4-q4-question" class="hidden"></span> <span data-template-id="round-4-q4-category" class="hidden"></span>
+      <div id="question-image-container" class="hidden w-full flex justify-center" style="flex-shrink: 0;">
+       <div id="photo-frame-q1" style="display: none;">
+        <img id="question-image" data-template-id="round-4-q1-photo" class="canva-image w-full object-cover rounded-[16px] border-4 border-black" style="width: 600px; height: 240px;" loading="lazy" alt="Question image">
+       </div>
+       <div id="photo-frame-q2" style="display: none;">
+        <img data-template-id="round-4-q2-photo" class="canva-image w-full object-cover rounded-[16px] border-4 border-black" style="width: 600px; height: 240px;" loading="lazy" alt="Question image">
+       </div>
+       <div id="photo-frame-q3" style="display: none;">
+        <img data-template-id="round-4-q3-photo" class="canva-image w-full object-cover rounded-[16px] border-4 border-black" style="width: 600px; height: 240px;" loading="lazy" alt="Question image">
+       </div>
+       <div id="photo-frame-q4" style="display: none;">
+        <img data-template-id="round-4-q4-photo" class="canva-image w-full object-cover rounded-[16px] border-4 border-black" style="width: 600px; height: 240px;" loading="lazy" alt="Question image">
+       </div>
+      </div>
+      <div id="answer-area" class="grid grid-cols-2 gap-6 w-full flex-shrink" style="overflow-y: auto; max-height: 100%; padding: 16px;"><!-- Round 1 Q1 Static Buttons -->
+       <template id="round-1-q1-answers-template"><button data-template-id="round-1-q1-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-1-q1-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-1-q1-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-1-q1-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 1 Q2 Static Buttons -->
+       <template id="round-1-q2-answers-template"><button data-template-id="round-1-q2-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-1-q2-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-1-q2-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-1-q2-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 1 Q3 Static Buttons -->
+       <template id="round-1-q3-answers-template"><button data-template-id="round-1-q3-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-1-q3-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-1-q3-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-1-q3-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 1 Q4 Static Buttons -->
+       <template id="round-1-q4-answers-template"><button data-template-id="round-1-q4-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-1-q4-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-1-q4-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-1-q4-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 1 Q5 Static Buttons -->
+       <template id="round-1-q5-answers-template"><button data-template-id="round-1-q5-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-1-q5-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-1-q5-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-1-q5-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 4 Q1 Static Buttons -->
+       <template id="round-4-q1-answers-template"><button data-template-id="round-4-q1-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-4-q1-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-4-q1-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-4-q1-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 4 Q2 Static Buttons -->
+       <template id="round-4-q2-answers-template"><button data-template-id="round-4-q2-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-4-q2-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-4-q2-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-4-q2-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 4 Q3 Static Buttons -->
+       <template id="round-4-q3-answers-template"><button data-template-id="round-4-q3-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-4-q3-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-4-q3-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-4-q3-choice-4" class="canva-button option-btn"></button>
+       </template><!-- Round 4 Q4 Static Buttons -->
+       <template id="round-4-q4-answers-template"><button data-template-id="round-4-q4-choice-1" class="canva-button option-btn"></button> <button data-template-id="round-4-q4-choice-2" class="canva-button option-btn"></button> <button data-template-id="round-4-q4-choice-3" class="canva-button option-btn"></button> <button data-template-id="round-4-q4-choice-4" class="canva-button option-btn"></button>
+       </template>
+      </div><button id="submit-answer-btn" data-template-id="submit-answer-button" class="btn-primary flex-shrink-0" style="max-width: 600px;" onclick="submitAnswer()">Submit Answer</button>
+     </div>
+    </div>
+   </div>
+  </template><!-- Correct Feedback Screen -->
+  <template id="correct-feedback-screen-template">
+   <div data-template-id="correct-screen-bg" class="canva-section w-full flex scale-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--lime);">
+    <div class="flex items-center justify-center" style="flex: 0 0 56.25%; padding: 40px;"><img data-template-id="correct-feedback-photo" class="canva-image w-full object-cover rounded-[40px] border-4 border-black" loading="lazy" alt="Feedback photo" style="aspect-ratio: 4.5 / 5; max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="flex flex-col items-center justify-center" style="flex: 1; padding: 40px; background: var(--lime); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+     <h2 data-template-id="correct-heading" class="canva-text font-inclusive text-7xl font-bold mb-8" style="color: var(--dark);"></h2>
+     <p data-template-id="correct-caption" class="canva-text font-nunito text-xl mb-12" style="color: var(--dark);"></p><button data-template-id="correct-continue-button" class="canva-button btn-primary" onclick="nextQuestion()" style="padding: 25.2px 107.52px; background: var(--pink); color: #fff; border: 3px solid #000000;"></button>
+    </div>
+   </div>
+  </template><!-- Incorrect Feedback Screen -->
+  <template id="incorrect-feedback-screen-template">
+   <div data-template-id="incorrect-screen-bg" class="canva-section w-full flex scale-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: #fac0f0;">
+    <div class="flex items-center justify-center" style="flex: 0 0 56.25%; padding: 40px;"><img data-template-id="incorrect-feedback-photo" class="canva-image w-full object-cover rounded-[40px] border-4 border-black" loading="lazy" alt="Feedback photo" style="aspect-ratio: 4.5 / 5; max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="flex flex-col items-center justify-center" style="flex: 1; padding: 40px; background: #fac0f0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+     <h2 data-template-id="incorrect-heading" class="canva-text font-inclusive text-7xl font-bold mb-8" style="color: #fffdf1;"></h2>
+     <p data-template-id="incorrect-caption" class="canva-text font-nunito text-xl mb-4" style="color: #fffdf1;"></p>
+     <div data-template-id="incorrect-answer-display" class="canva-text font-nunito font-semibold mb-12" style="background: var(--lime); padding: 16px 32px; border-radius: 0; text-align: center; font-size: 24px; color: #000000;"></div><button data-template-id="incorrect-continue-button" class="canva-button btn-primary" onclick="nextQuestion()" style="padding: 25.2px 107.52px; background: var(--lime); color: #000000; border: 3px solid #000000;"></button>
+    </div>
+   </div>
+  </template><!-- Turn Complete -->
+  <template id="turn-complete-template">
+   <div data-template-id="turn-complete-bg" class="canva-section w-full flex scale-in" style="height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--sky); display: grid; grid-template-columns: minmax(38%, 400px) 1fr; gap: 0;">
+    <div class="flex items-center justify-center" style="padding: 40px; background: var(--sky);"><img data-template-id="turn-complete-photo" class="canva-image w-full object-cover rounded-[40px] border-4 border-black" loading="lazy" alt="Turn complete photo" style="aspect-ratio: 3 / 4.5; max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="flex flex-col items-center justify-center" style="padding: 60px 40px; background: var(--sky); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+     <h2 data-template-id="turn-complete-heading" class="canva-text font-inclusive text-7xl font-bold mb-6" style="color: #fffdf1;"></h2>
+     <p data-template-id="turn-complete-pass-text" class="canva-text font-nunito text-2xl mb-8" style="color: #fffdf1;"></p>
+     <p id="turn-next-player-name" class="font-nunito font-bold text-3xl mb-12" style="color: #fffdf1;"></p>
+     <div id="score-pill" class="flex items-center gap-4" style="background: #fffdf1; border: 4px solid #000000; border-radius: 50px; padding: 12px 24px; margin-bottom: 32px; max-width: 520px; min-height: 80px; justify-content: center;">
+      <div id="turn-player-avatar" class="avatar" style="width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; font-size: 1.5rem;"></div><span id="turn-player-name-pill" class="font-nunito font-semibold text-xl" style="color: var(--dark); flex: 1;"></span> <span id="turn-player-round-score" class="font-nunito font-bold text-4xl" style="color: var(--pink);"></span>
+     </div><button data-template-id="turn-complete-ready-button" class="canva-button btn-secondary" onclick="continueAfterTurn()" style="padding: 18px 56px; background: var(--lime); color: #000000; border: 3px solid #000000;"></button>
+    </div>
+   </div>
+  </template><!-- Round Complete -->
+  <template id="round-complete-template">
+   <div data-template-id="scoreboard-screen-bg" class="canva-section w-full" style="display: grid; grid-template-columns: minmax(38%, 400px) 1fr; min-height: calc(100 * min(var(--vh, 1vh), 1vh)); background: var(--sky); gap: 0;">
+    <div class="flex items-center justify-center" style="padding: 40px; background: var(--sky);"><img data-template-id="scoreboard-portrait-photo" class="canva-image w-full object-cover rounded-[40px] border-4 border-black" loading="lazy" alt="Scoreboard portrait" style="aspect-ratio: 3 / 4.5; max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="flex flex-col items-center justify-center" style="padding: 60px 40px; background: var(--sky); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+     <h2 data-template-id="scoreboard-heading" class="canva-text font-inclusive text-7xl font-bold mb-12" style="color: #fffdf1;"></h2>
+     <div id="round-scores-container" class="w-full" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; max-width: 530px;"></div><button id="next-round-btn" data-template-id="scoreboard-continue-button" class="canva-button btn-secondary" style="padding: 18px 56px; background: var(--lime); color: #000000; border: 3px solid #000000;" onclick="nextRound()"></button>
+    </div><!-- Hidden reference elements for scoreboard row styling -->
+    <div data-template-id="scoreboard-row-style" style="display: none; background: #fffdf1; border-color: var(--pink); color: var(--dark);"></div><span data-template-id="scoreboard-score-style" style="display: none; color: var(--pink);"></span>
+   </div>
+  </template><!-- Game Over -->
+  <template id="game-over-template">
+   <div data-template-id="game-over-screen-bg" class="canva-section w-full" style="display: grid; grid-template-columns: minmax(38%, 400px) 1fr; min-height: calc(100 * min(var(--vh, 1vh), 1vh)); background: #59b0f7; gap: 0;">
+    <div class="flex items-center justify-center" style="padding: 40px; background: #59b0f7;"><img data-template-id="game-over-portrait-photo" class="canva-image w-full object-cover rounded-[40px] border-4 border-black" loading="lazy" alt="Game over portrait" style="aspect-ratio: 3 / 4.5; max-width: 100%; max-height: 100%;">
+    </div>
+    <div class="flex flex-col items-center justify-center" style="padding: 60px 40px; background: #59b0f7; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+     <h2 data-template-id="game-over-title" class="canva-text font-inclusive text-6xl font-bold mb-4" style="color: var(--dark);"></h2>
+     <p id="winner-text" data-template-id="winner-text" class="canva-text text-xl font-semibold mb-12 text-center font-nunito" style="color: var(--dark);"></p>
+     <div id="final-scores-container" class="w-full" style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; max-width: 530px;"></div>
+     <div class="flex flex-col sm:flex-row gap-4">
+      <button data-template-id="play-again-button" class="canva-button btn-primary" style="padding: 18px 56px; background: var(--pink); color: #000000; border: 3px solid #000000;" onclick="playAgain()"></button> <button data-template-id="new-game-button" class="canva-button btn-secondary" style="padding: 18px 56px; background: var(--lime); color: #000000; border: 3px solid #000000;" onclick="newGame()"></button>
+     </div>
+    </div>
+   </div>
+  </template>
+  <script src="/_sdk/489148d8756906ef.editing_sdk.js" integrity="sha512-hxxSbMNp1t+UEu3j/dIQUU4MJnmsCo0Gs3iQVVS706vrCJ3Yt2+ySOlfJEaPyiyQVLjZRmn1dNVqg6M40VZZHQ=="></script>
+  <script>
+
+    // ---- QUIZ DATA ----
+    const AVATAR_COLORS = ['#FF4FCB','#A7C7FF','#D7FF3F','#FFA94D','#A78BFA','#34D399'];
+
+    const ROUNDS = [
+        {
+            type: 'multiple-choice',
+            title: 'Multiple Choice',
+            description: 'Pick the correct answer from four options.',
+            questions: [
+                { question: 'What is the largest planet in our solar system?', category: 'Science', options: ['Mars','Jupiter','Saturn','Neptune'], answer: 'Jupiter' },
+                { question: 'Which country is home to the kangaroo?', category: 'Geography', options: ['New Zealand','South Africa','Australia','Brazil'], answer: 'Australia' },
+                { question: 'Who painted the Mona Lisa?', category: 'Art', options: ['Van Gogh','Da Vinci','Picasso','Monet'], answer: 'Da Vinci' },
+                { question: 'What is the chemical symbol for gold?', category: 'Science', options: ['Go','Gd','Au','Ag'], answer: 'Au' },
+                { question: 'In which year did the Titanic sink?', category: 'History', options: ['1905','1912','1920','1898'], answer: '1912' }
+            ]
+        },
+        {
+            type: 'fill-in-the-blank',
+            title: 'Fill in the Blank',
+            description: 'Type the correct answer to complete the statement.',
+            questions: [
+                { question: 'The capital of France is _____.', category: 'Geography', answer: 'paris' },
+                { question: 'Water freezes at _____ degrees Celsius.', category: 'Science', answer: '0' },
+                { question: 'The Great Wall is located in _____.', category: 'Geography', answer: 'china' },
+                { question: 'A group of lions is called a _____.', category: 'Nature', answer: 'pride' },
+                { question: 'The currency of Japan is the _____.', category: 'Culture', answer: 'yen' }
+            ]
+        },
+        {
+            type: 'enumeration',
+            title: 'Enumeration',
+            description: 'List all the correct items to score points.',
+            questions: [
+                { question: 'Name 3 primary colors.', category: 'Art', answers: ['red','blue','yellow'], count: 3 },
+                { question: 'Name 3 states of matter.', category: 'Science', answers: ['solid','liquid','gas'], count: 3 },
+                { question: 'Name 4 cardinal directions.', category: 'Geography', answers: ['north','south','east','west'], count: 4 },
+                { question: 'Name 3 planets closest to the Sun.', category: 'Science', answers: ['mercury','venus','earth'], count: 3 }
+            ]
+        },
+        {
+            type: 'image-identification',
+            title: 'Image Identification',
+            description: 'Identify what you see in the image.',
+            questions: [
+                { question: 'Which part of a cat is also called vibrissae?', category: 'Animals', options: ['Tail','Whiskers','Ears','Claws'], answer: 'Whiskers' },
+                { question: 'What is this pastry called?', category: 'Food', options: ['Brioche','Baguette','Croissant','Éclair'], answer: 'Croissant' },
+                { question: 'What determines the feel of each keypress on a keyboard?', category: 'Tech', options: ['Switch','Cable','Port','Keys'], answer: 'Switch' },
+                { question: 'Gua Sha is a traditional healing technique that originated in which country?', category: 'Medicine', options: ['Japan','China','Korea','Thailand'], answer: 'China' }
+            ]
+        }
+    ];
+
+    // ---- GAME STATE ----
+    let gameState = {
+        mode: 'solo',
+        players: [],
+        currentRound: 0,
+        currentQuestion: 0,
+        currentPlayerIndex: 0,
+        scores: {},
+        roundScores: {},
+        selectedAnswer: null
+    };
+
+    const container = document.getElementById('game-container');
+
+    // ---- SCREEN RENDERING ----
+    function showStartScreen() {
+        const tpl = document.getElementById('start-screen-template');
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+        lucide.createIcons();
+    }
+
+    function startSolo() {
+        gameState = { mode: 'solo', players: [{ name: 'You', color: AVATAR_COLORS[0] }], currentRound: 0, currentQuestion: 0, currentPlayerIndex: 0, scores: { 'You': 0 }, roundScores: {}, selectedAnswer: null };
+        showRoundIntro();
+    }
+
+    function startMultiplayer() {
+        const tpl = document.getElementById('player-setup-template');
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+        const countGroup = document.getElementById('player-count-group');
+        for (let i = 2; i <= 4; i++) {
+            const btn = document.createElement('button');
+            btn.setAttribute('data-template-id', `setup-player-count-${i}`);
+            btn.className = 'canva-button player-count-circle';
+            btn.textContent = i;
+            btn.setAttribute('role', 'radio');
+            btn.setAttribute('aria-checked', 'false');
+            btn.setAttribute('aria-label', i + ' players');
+            btn.onclick = () => selectPlayerCount(i);
+            countGroup.appendChild(btn);
+        }
+        // Default to 2 players on load
+        selectPlayerCount(2);
+    }
+
+    function selectPlayerCount(count) {
+        const btns = document.querySelectorAll('#player-count-group button');
+        btns.forEach((b, idx) => {
+            const isSelected = (idx + 2) === count;
+            b.classList.toggle('selected', isSelected);
+            b.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+        });
+        const namesContainer = document.getElementById('player-names-container');
+        namesContainer.innerHTML = '';
+        for (let i = 0; i < count; i++) {
+            const wrapper = document.createElement('div');
+            wrapper.style.cssText = 'display: flex; flex-direction: column; gap: 4px;';
+            const label = document.createElement('label');
+            label.setAttribute('data-template-id', `setup-player-label-${i + 1}`);
+            label.className = 'canva-text block font-semibold text-xs';
+            label.style.color = '#1a1a2e';
+            label.style.textAlign = 'center';
+            label.textContent = `PLAYER ${i + 1}`;
+            label.setAttribute('for', `player-name-${i}`);
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = `player-name-${i}`;
+            input.setAttribute('data-template-id', `setup-player-input-${i + 1}`);
+            input.className = 'player-input-field';
+            input.placeholder = `Enter name...`;
+            input.maxLength = 20;
+            input.oninput = validatePlayerNames;
+            wrapper.appendChild(label);
+            wrapper.appendChild(input);
+            namesContainer.appendChild(wrapper);
+        }
+        validatePlayerNames();
+    }
+
+    function validatePlayerNames() {
+        const inputs = document.querySelectorAll('#player-names-container input');
+        const allFilled = inputs.length > 0 && [...inputs].every(i => i.value.trim().length > 0);
+        document.getElementById('start-game-btn').disabled = !allFilled;
+    }
+
+    function startGame() {
+        const inputs = document.querySelectorAll('#player-names-container input');
+        const players = [...inputs].map((inp, idx) => ({ name: inp.value.trim(), color: AVATAR_COLORS[idx % AVATAR_COLORS.length] }));
+        const scores = {};
+        players.forEach(p => scores[p.name] = 0);
+        gameState = { mode: 'multiplayer', players, currentRound: 0, currentQuestion: 0, currentPlayerIndex: 0, scores, roundScores: {}, selectedAnswer: null };
+        showRoundIntro();
+    }
+
+    function showRoundIntro() {
+        const round = ROUNDS[gameState.currentRound];
+        gameState.currentQuestion = 0;
+        gameState.currentPlayerIndex = 0;
+        gameState.roundScores = {};
+        gameState.players.forEach(p => gameState.roundScores[p.name] = 0);
+
+        const templateId = `round-${gameState.currentRound + 1}-template`;
+        const tpl = document.getElementById(templateId);
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+
+        // Hide nav controls
+        document.getElementById('nav-controls').classList.add('hidden');
+
+        const playerIndicator = document.querySelector('[data-template-id*="player-indicator"]');
+        const playerInfo = document.getElementById('current-player-info');
+        if (gameState.mode === 'multiplayer') {
+            const cp = gameState.players[gameState.currentPlayerIndex];
+            playerInfo.textContent = `${cp.name}'s turn first!`;
+            if (playerIndicator) playerIndicator.style.display = 'flex';
+        } else {
+            playerInfo.textContent = '';
+            if (playerIndicator) playerIndicator.style.display = 'none';
+        }
+    }
+
+    function startRound() {
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const round = ROUNDS[gameState.currentRound];
+        const qIdx = gameState.currentQuestion;
+        if (qIdx >= round.questions.length) {
+            showRoundComplete();
+            return;
+        }
+        const q = round.questions[qIdx];
+        gameState.selectedAnswer = null;
+
+        const tpl = document.getElementById('question-screen-template');
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+
+        // Add special class for Round 1 questions 1-5 styling (pill-shaped buttons)
+        if (gameState.currentRound === 0 && qIdx <= 4) {
+            const answerArea = document.getElementById('answer-area');
+            answerArea.classList.add(`round-1-q${qIdx + 1}`);
+        }
+
+        // Add special class for Round 4 questions 1-4 styling (pill-shaped buttons)
+        if (gameState.currentRound === 3 && qIdx <= 3) {
+            const answerArea = document.getElementById('answer-area');
+            answerArea.classList.add(`round-4-q${qIdx + 1}`);
+        }
+
+        // Show nav controls
+        updateNavControls();
+
+        // Progress
+        const total = round.questions.length;
+        document.getElementById('question-progress-text').textContent = `Question ${qIdx + 1} of ${total}`;
+        const cp = gameState.players[gameState.currentPlayerIndex];
+        document.getElementById('question-score-text').textContent = `Score: ${gameState.scores[cp.name]}`;
+        document.getElementById('question-progress-bar').style.width = `${((qIdx) / total) * 100}%`;
+        setTimeout(() => {
+            const bar = document.getElementById('question-progress-bar');
+            if (bar) bar.style.width = `${((qIdx + 1) / total) * 100}%`;
+        }, 100);
+
+        // Category & question - set data-template-id for editability
+        const categoryBadgeEl = document.getElementById('question-category-badge');
+        const questionTextEl = document.getElementById('question-text');
+        
+        // Set unique template ID for this question
+        const roundNum = gameState.currentRound + 1;
+        const qNum = gameState.currentQuestion + 1;
+        const questionTemplateId = `round-${roundNum}-q${qNum}-question`;
+        const categoryTemplateId = `round-${roundNum}-q${qNum}-category`;
+        
+        questionTextEl.setAttribute('data-template-id', questionTemplateId);
+        categoryBadgeEl.setAttribute('data-template-id', categoryTemplateId);
+        
+        // Only populate from question data if element is completely empty
+        // This preserves user-edited text from config.json via the SDK
+        if (!questionTextEl.textContent || questionTextEl.textContent.trim() === '') {
+            questionTextEl.textContent = q.question || '';
+        }
+        
+        if (!categoryBadgeEl.textContent || categoryBadgeEl.textContent.trim() === '') {
+            categoryBadgeEl.textContent = q.category || '';
+        }
+
+        // Image - only show for Round 4 (uses data-template-id photo)
+        const isRound4 = gameState.currentRound === 3;
+        const imageContainer = document.getElementById('question-image-container');
+        
+        if (isRound4) {
+            imageContainer.classList.remove('hidden');
+            // Hide all photo frames first
+            document.getElementById('photo-frame-q1').style.display = 'none';
+            document.getElementById('photo-frame-q2').style.display = 'none';
+            document.getElementById('photo-frame-q3').style.display = 'none';
+            document.getElementById('photo-frame-q4').style.display = 'none';
+            // Show the appropriate frame for this question
+            const frameId = `photo-frame-q${gameState.currentQuestion + 1}`;
+            const frame = document.getElementById(frameId);
+            if (frame) frame.style.display = 'block';
+        } else if (q.imageUrl) {
+            imageContainer.classList.remove('hidden');
+            // This shouldn't happen for current questions but kept for safety
+        } else {
+            imageContainer.classList.add('hidden');
+        }
+
+        // Answer area
+        const answerArea = document.getElementById('answer-area');
+        const submitBtn = document.getElementById('submit-answer-btn');
+
+        // Hide submit button by default (only show for Round 2 and Round 3)
+        submitBtn.classList.add('hidden');
+
+        // Check if Round 1 - use static template buttons with unique templates per question
+        if (gameState.currentRound === 0 && (round.type === 'multiple-choice' || round.type === 'image-identification')) {
+            const templateId = `round-1-q${gameState.currentQuestion + 1}-answers-template`;
+            const staticTpl = document.getElementById(templateId);
+            if (staticTpl) {
+                const fragment = staticTpl.content.cloneNode(true);
+                const buttons = fragment.querySelectorAll('[data-template-id]');
+                buttons.forEach((btn, idx) => {
+                    // Only set text from data if button is empty (user hasn't customized via config)
+                    if (!btn.textContent || btn.textContent.trim() === '') {
+                        btn.textContent = q.options[idx];
+                    }
+                    btn.onclick = () => selectMCOption(btn, btn.textContent);
+                });
+                answerArea.appendChild(fragment);
+            } else {
+                // Fallback if template not found
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = opt;
+                    btn.onclick = () => selectMCOption(btn, opt);
+                    answerArea.appendChild(btn);
+                });
+            }
+        } else if (gameState.currentRound === 3 && round.type === 'image-identification') {
+            // Round 4 - use static template buttons with unique templates per question
+            const templateId = `round-4-q${gameState.currentQuestion + 1}-answers-template`;
+            const staticTpl = document.getElementById(templateId);
+            if (staticTpl) {
+                const fragment = staticTpl.content.cloneNode(true);
+                const buttons = fragment.querySelectorAll('[data-template-id]');
+                buttons.forEach((btn, idx) => {
+                    // Only set text from data if button is empty (user hasn't customized via config)
+                    if (!btn.textContent || btn.textContent.trim() === '') {
+                        btn.textContent = q.options[idx];
+                    }
+                    btn.onclick = () => selectMCOption(btn, btn.textContent);
+                });
+                answerArea.appendChild(fragment);
+            } else {
+                // Fallback if template not found
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = opt;
+                    btn.onclick = () => selectMCOption(btn, opt);
+                    answerArea.appendChild(btn);
+                });
+            }
+        } else if (round.type === 'multiple-choice' || round.type === 'image-identification') {
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.onclick = () => selectMCOption(btn, opt);
+                answerArea.appendChild(btn);
+            });
+        } else if (round.type === 'fill-in-the-blank') {
+            const label = document.createElement('label');
+            label.textContent = 'Your answer';
+            label.className = 'sr-only';
+            label.setAttribute('for', 'fill-input');
+            answerArea.appendChild(label);
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = 'fill-input';
+            input.className = 'quiz-input';
+            input.placeholder = 'Type your answer...';
+            input.style.gridColumn = 'span 2';
+            input.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); submitAnswer(); } };
+            answerArea.appendChild(input);
+            submitBtn.classList.remove('hidden');
+            submitBtn.style.background = '#59b0f7';
+            submitBtn.style.color = '#fffdf1';
+            setTimeout(() => input.focus(), 100);
+        } else if (round.type === 'enumeration') {
+            for (let i = 0; i < q.count; i++) {
+                const label = document.createElement('label');
+                label.textContent = `Answer ${i + 1}`;
+                label.className = 'sr-only';
+                label.setAttribute('for', `enum-input-${i}`);
+                answerArea.appendChild(label);
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = `enum-input-${i}`;
+                input.className = 'quiz-input';
+                input.placeholder = `Answer ${i + 1}`;
+                input.dataset.index = i;
+                input.style.gridColumn = 'span 2';
+                answerArea.appendChild(input);
+            }
+            submitBtn.classList.remove('hidden');
+        }
+        lucide.createIcons();
+    }
+
+    function selectMCOption(btn, option) {
+        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        gameState.selectedAnswer = option;
+        // Auto-submit after short delay for MC
+        setTimeout(() => submitAnswer(), 300);
+    }
+
+    function submitAnswer() {
+        const round = ROUNDS[gameState.currentRound];
+        const q = round.questions[gameState.currentQuestion];
+        let isCorrect = false;
+        let correctText = '';
+
+        if (round.type === 'multiple-choice' || round.type === 'image-identification') {
+            if (!gameState.selectedAnswer) return;
+            isCorrect = gameState.selectedAnswer === q.answer;
+            correctText = q.answer;
+            // Show correct/incorrect on options
+            document.querySelectorAll('.option-btn').forEach(b => {
+                b.onclick = null;
+                if (b.textContent === q.answer) b.classList.add('correct');
+                else if (b.classList.contains('selected') && !isCorrect) b.classList.add('incorrect');
+            });
+        } else if (round.type === 'fill-in-the-blank') {
+            const input = document.getElementById('fill-input');
+            const val = input.value.trim().toLowerCase();
+            isCorrect = val === q.answer.toLowerCase();
+            correctText = q.answer.charAt(0).toUpperCase() + q.answer.slice(1);
+        } else if (round.type === 'enumeration') {
+            const inputs = document.querySelectorAll('#answer-area input');
+            const userAnswers = [...inputs].map(i => i.value.trim().toLowerCase());
+            const correctAnswers = q.answers.map(a => a.toLowerCase());
+            let matches = 0;
+            userAnswers.forEach(ua => {
+                if (correctAnswers.includes(ua)) matches++;
+            });
+            isCorrect = matches === q.count;
+            correctText = q.answers.join(', ');
+            // Partial credit
+            if (matches > 0 && !isCorrect) {
+                // Still count partial
+            }
+        }
+
+        if (isCorrect) {
+            const cp = gameState.players[gameState.currentPlayerIndex];
+            gameState.scores[cp.name]++;
+            gameState.roundScores[cp.name]++;
+            fireConfetti();
+        }
+
+        setTimeout(() => showFeedback(isCorrect, correctText), round.type === 'multiple-choice' || round.type === 'image-identification' ? 600 : 200);
+    }
+
+    function showFeedback(isCorrect, correctText) {
+        const templateId = isCorrect ? 'correct-feedback-screen-template' : 'incorrect-feedback-screen-template';
+        const tpl = document.getElementById(templateId);
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+
+        // Hide nav controls
+        document.getElementById('nav-controls').classList.add('hidden');
+
+        if (isCorrect) {
+            const bgEl = document.querySelector('[data-template-id="correct-screen-bg"]');
+            const heading = document.querySelector('[data-template-id="correct-heading"]');
+            const caption = document.querySelector('[data-template-id="correct-caption"]');
+
+            bgEl.style.background = 'var(--lime)';
+            heading.textContent = 'Correct!';
+            heading.style.color = 'var(--dark)';
+            caption.textContent = 'Great job, keep it up!';
+            caption.style.color = 'var(--dark)';
+        } else {
+            const bgEl = document.querySelector('[data-template-id="incorrect-screen-bg"]');
+            const heading = document.querySelector('[data-template-id="incorrect-heading"]');
+            const caption = document.querySelector('[data-template-id="incorrect-caption"]');
+            const answerDisplay = document.querySelector('[data-template-id="incorrect-answer-display"]');
+
+            bgEl.style.background = '#fb64d0';
+            heading.textContent = 'Not Quite';
+            heading.style.color = '#fffdf1';
+            caption.textContent = correctText;
+            caption.style.color = '#fffdf1';
+            answerDisplay.textContent = correctText;
+            answerDisplay.style.background = 'var(--lime)';
+            answerDisplay.style.color = '#000000';
+        }
+    }
+
+    function nextQuestion() {
+        gameState.currentQuestion++;
+        const round = ROUNDS[gameState.currentRound];
+
+        if (gameState.mode === 'multiplayer') {
+            const nextPlayerIdx = (gameState.currentPlayerIndex + 1) % gameState.players.length;
+            if (nextPlayerIdx === 0 && gameState.currentQuestion < round.questions.length) {
+                // All players answered this question, move to next
+                gameState.currentPlayerIndex = 0;
+                showQuestion();
+            } else if (gameState.currentQuestion >= round.questions.length) {
+                // Round done for this player, check if more players
+                if (nextPlayerIdx !== 0) {
+                    showTurnComplete(nextPlayerIdx);
+                } else {
+                    showRoundComplete();
+                }
+            } else {
+                gameState.currentPlayerIndex = nextPlayerIdx;
+                showTurnComplete(nextPlayerIdx);
+            }
+        } else {
+            if (gameState.currentQuestion >= round.questions.length) {
+                showRoundComplete();
+            } else {
+                showQuestion();
+            }
+        }
+    }
+
+    function resetQuiz() {
+        gameState = {
+            mode: 'solo',
+            players: [],
+            currentRound: 0,
+            currentQuestion: 0,
+            currentPlayerIndex: 0,
+            scores: {},
+            roundScores: {},
+            selectedAnswer: null
+        };
+        document.getElementById('nav-controls').classList.add('hidden');
+        showStartScreen();
+    }
+
+    function updateNavControls() {
+        const navControls = document.getElementById('nav-controls');
+        const backBtn = document.getElementById('back-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const round = ROUNDS[gameState.currentRound];
+        navControls.classList.remove('hidden');
+        backBtn.disabled = gameState.currentQuestion === 0;
+        nextBtn.disabled = gameState.currentQuestion >= round.questions.length - 1;
+    }
+
+    function goBack() {
+        if (gameState.currentQuestion > 0) {
+            gameState.currentQuestion--;
+            showQuestion();
+        }
+    }
+
+    function goNext() {
+        const round = ROUNDS[gameState.currentRound];
+        if (gameState.currentQuestion < round.questions.length - 1) {
+            gameState.currentQuestion++;
+            showQuestion();
+        }
+    }
+
+    function showTurnComplete(nextIdx) {
+        const cp = gameState.players[gameState.currentPlayerIndex];
+        const np = gameState.players[nextIdx];
+
+        const tpl = document.getElementById('turn-complete-template');
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+
+        // Hide nav controls
+        document.getElementById('nav-controls').classList.add('hidden');
+
+        // Set heading and pass text (via data-template-id, will be populated from config)
+        const heading = document.querySelector('[data-template-id="turn-complete-heading"]');
+        const passText = document.querySelector('[data-template-id="turn-complete-pass-text"]');
+        
+        if (!heading.textContent || heading.textContent.trim() === '') {
+            heading.textContent = 'Round Score';
+        }
+        if (!passText.textContent || passText.textContent.trim() === '') {
+            passText.textContent = 'Pass the device to:';
+        }
+
+        // Set next player name
+        document.getElementById('turn-next-player-name').textContent = np.name;
+
+        // Set score pill with current player info
+        const avatar = document.getElementById('turn-player-avatar');
+        avatar.style.background = cp.color;
+        avatar.textContent = cp.name.charAt(0).toUpperCase();
+
+        document.getElementById('turn-player-name-pill').textContent = cp.name;
+        document.getElementById('turn-player-round-score').textContent = `${gameState.roundScores[cp.name]}`;
+
+        gameState.currentPlayerIndex = nextIdx;
+    }
+
+    function continueAfterTurn() {
+        const round = ROUNDS[gameState.currentRound];
+        if (gameState.currentQuestion >= round.questions.length) {
+            showRoundComplete();
+        } else {
+            showQuestion();
+        }
+    }
+
+    function showRoundComplete() {
+        fireConfetti();
+        const tpl = document.getElementById('round-complete-template');
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+
+        // Hide nav controls
+        document.getElementById('nav-controls').classList.add('hidden');
+
+        const scoresContainer = document.getElementById('round-scores-container');
+        const sorted = [...gameState.players].sort((a, b) => gameState.scores[b.name] - gameState.scores[a.name]);
+
+        sorted.forEach((p) => {
+            const row = document.createElement('div');
+            row.style.cssText = `display: flex; align-items: center; justify-content: space-between; background: #fffdf1; border: 4px solid #000000; border-radius: 50px; padding: 12px 20px; gap: 12px; height: 96px;`;
+
+            const av = document.createElement('div');
+            av.className = 'avatar';
+            av.style.background = p.color;
+            av.style.width = '56px';
+            av.style.height = '56px';
+            av.style.flexShrink = '0';
+            av.style.fontSize = '1.5rem';
+            av.style.borderRadius = '50%';
+            av.textContent = p.name.charAt(0).toUpperCase();
+
+            const nameEl = document.createElement('span');
+            nameEl.className = 'font-nunito';
+            nameEl.style.cssText = `color: #000000; font-weight: 600; font-size: 24px; flex: 1;`;
+            nameEl.textContent = p.name;
+
+            const scoreEl = document.createElement('span');
+            scoreEl.className = 'font-nunito';
+            scoreEl.style.cssText = `color: var(--pink); font-weight: 700; font-size: 42px; padding-right: 24px;`;
+            scoreEl.textContent = gameState.scores[p.name];
+
+            row.appendChild(av);
+            row.appendChild(nameEl);
+            row.appendChild(scoreEl);
+            scoresContainer.appendChild(row);
+        });
+
+        const nextBtn = document.getElementById('next-round-btn');
+        if (gameState.currentRound >= ROUNDS.length - 1) {
+            nextBtn.textContent = 'See Final Results';
+            nextBtn.onclick = showGameOver;
+        }
+    }
+
+    function nextRound() {
+        gameState.currentRound++;
+        if (gameState.currentRound >= ROUNDS.length) {
+            showGameOver();
+        } else {
+            showRoundIntro();
+        }
+    }
+
+    function showGameOver() {
+        fireConfetti();
+        setTimeout(fireConfetti, 800);
+
+        const tpl = document.getElementById('game-over-template');
+        container.innerHTML = '';
+        container.appendChild(tpl.content.cloneNode(true));
+
+        // Hide nav controls
+        document.getElementById('nav-controls').classList.add('hidden');
+
+        const sorted = [...gameState.players].sort((a, b) => gameState.scores[b.name] - gameState.scores[a.name]);
+        const winner = sorted[0];
+        const winnerText = document.getElementById('winner-text');
+        
+        // Check for draw in multiplayer mode
+        const allScoresEqual = gameState.mode === 'multiplayer' && sorted.every(p => gameState.scores[p.name] === gameState.scores[winner.name]);
+        
+        if (gameState.mode === 'solo') {
+            winnerText.textContent = `Final Score: ${gameState.scores[winner.name]} points`;
+        } else if (allScoresEqual) {
+            winnerText.textContent = `It's a draw! Everyone scored ${gameState.scores[winner.name]} points!`;
+        } else {
+            winnerText.textContent = `${winner.name} wins with ${gameState.scores[winner.name]} points!`;
+        }
+
+        const scoresContainer = document.getElementById('final-scores-container');
+        sorted.forEach((p, idx) => {
+            const row = document.createElement('div');
+            row.style.cssText = `display: flex; align-items: center; justify-content: space-between; background: #fffdf1; border: 4px solid #000000; border-radius: 50px; padding: 12px 20px; gap: 12px; height: 96px;`;
+
+            // Only show medal/rank if not a draw
+            if (!allScoresEqual) {
+                const medal = document.createElement('span');
+                medal.style.cssText = `font-size: 32px; flex-shrink: 0;`;
+                medal.textContent = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`;
+                row.appendChild(medal);
+            }
+
+            const nameEl = document.createElement('span');
+            nameEl.className = 'font-nunito';
+            nameEl.style.cssText = `color: #000000; font-weight: 600; font-size: 24px; flex: 1;`;
+            nameEl.textContent = p.name;
+
+            const scoreEl = document.createElement('span');
+            scoreEl.className = 'font-nunito';
+            scoreEl.style.cssText = `color: var(--pink); font-weight: 700; font-size: 42px; padding-right: 24px;`;
+            scoreEl.textContent = gameState.scores[p.name];
+
+            row.appendChild(nameEl);
+            row.appendChild(scoreEl);
+            scoresContainer.appendChild(row);
+        });
+    }
+
+    function playAgain() {
+        // Same players, reset scores
+        gameState.currentRound = 0;
+        gameState.currentQuestion = 0;
+        gameState.currentPlayerIndex = 0;
+        gameState.players.forEach(p => gameState.scores[p.name] = 0);
+        gameState.roundScores = {};
+        showRoundIntro();
+    }
+
+    function newGame() {
+        showStartScreen();
+    }
+
+    // ---- CONFETTI ----
+    function fireConfetti() {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#FF4FCB','#D7FF3F','#A7C7FF','#FFA94D','#A78BFA','#34D399','#FFF5D6'];
+
+        for (let i = 0; i < 80; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: -20 - Math.random() * 200,
+                w: 6 + Math.random() * 8,
+                h: 4 + Math.random() * 6,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vx: (Math.random() - 0.5) * 4,
+                vy: 2 + Math.random() * 4,
+                rotation: Math.random() * 360,
+                rotSpeed: (Math.random() - 0.5) * 10,
+                opacity: 1
+            });
+        }
+
+        let frame = 0;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let alive = false;
+            particles.forEach(p => {
+                if (p.opacity <= 0) return;
+                alive = true;
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.08;
+                p.rotation += p.rotSpeed;
+                if (p.y > canvas.height - 50) p.opacity -= 0.03;
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.globalAlpha = Math.max(0, p.opacity);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                ctx.restore();
+            });
+            frame++;
+            if (alive && frame < 180) requestAnimationFrame(animate);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+    }
+
+    // ---- INIT ----
+    document.addEventListener('DOMContentLoaded', () => {
+        showStartScreen();
+        lucide.createIcons();
+    });
+
+    window.addEventListener('resize', () => {
+        const canvas = document.getElementById('confetti-canvas');
+        if (canvas) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+    });
+    </script>
+ 
+</body></html>
+
