@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>復古高山像素問答</title>
+    <!-- 引入開源的像素英文字型，中文字則依賴系統預設的黑體或像素風字型 -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pixel-border: 4px solid #000;
+            --bg-rock-dark: #3a3845;
+            --bg-rock-light: #4a4755;
+            --ui-bg: #c0cbdc;
+            --ui-text: #1a1a24;
+            --btn-bg: #8b9bb4;
+            --btn-hover: #a1b0c8;
+            --btn-active: #72829b;
+            --correct-color: #5b8c5a;
+            --wrong-color: #b33939; /* 新增錯誤的顏色，用於標示選錯的答案 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* 復古像素風字體設定 */
+            font-family: 'VT323', "微軟正黑體", sans-serif;
+            background-color: var(--bg-rock-dark);
+            
+            /* 💡 移除這裡原本寫死的 background-image，我們改由下方的 class 來控制 */
+            
+            /* 修改背景設定以支援向上滾動 */
+            background-size: 100% auto; 
+            background-repeat: repeat-y; /* 允許垂直方向重複拼接 */
+            animation: scrollBg 100s linear infinite; /* 套用滾動動畫，linear代表等速 */
+            
+            /* 💡 新增：讓背景切換時有柔和的 0.5 秒淡入淡出效果 */
+            transition: background-image 0.5s ease-in-out;
+            
+            color: var(--ui-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* 將原本的 overflow: hidden; 修改為以下兩行：允許垂直捲動，並增加上下邊距 */
+            overflow-y: auto;
+            padding: 40px 0;
+            user-select: none;
+        }
+
+        #game-container {
+            width: 95%;
+            max-width: 600px;
+            background-color: var(--ui-bg);
+            /* 像素風格的外框陰影 */
+            box-shadow: 
+                -4px 0 0 0 #000,
+                4px 0 0 0 #000,
+                0 -4px 0 0 #000,
+                0 4px 0 0 #000,
+                inset -4px -4px 0px 0px rgba(0,0,0,0.2),
+                inset 4px 4px 0px 0px rgba(255,255,255,0.7);
+            padding: 30px 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        /* 畫面切換控制 (隱藏不需要顯示的頁面) */
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s steps(3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 💡 新增：三個不同畫面的專屬背景類別 */
+        /* 1. 起始畫面背景 */
+        .bg-start {
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3OTA2NjYzX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfYzJ0czFiYzJ0czFiYzJ0cyAoMSkuanBnLmpwZWciXV0.jpeg?sha=47476cdcffa86c02');
+            
+            /* 💡 新增：專屬起始畫面的靜止設定 */
+            animation: none; /* 強制停止從 body 繼承來的滾動動畫 */
+            background-size: cover; /* 讓圖片等比例縮放填滿整個畫面 */
+            background-position: center; /* 讓圖片保持在正中央 */
+            background-repeat: no-repeat; /* 靜止狀態下不需要重複拼接 */
+        }
+        
+        /* 2. 答題畫面背景 */
+        .bg-quiz {
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzEzMTEwX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfejZnZjlpejZnZjlpejZnZi5qcGcuanBlZyJdXQ.jpeg?sha=0c78c8a2dbb303ad');
+        }
+        
+        /* 3. 結算畫面背景 (我先用另一張高山圖示意，你可以替換成喜歡的圖片) */
+        .bg-result {
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODEwNDQ2X1F1aXogU2VhbWxlc3MgQmFja2dvcnVuZCAwMS5qcGcuanBlZyJdXQ.jpeg?sha=0b7c7178f2a044d8');
+        }
+
+        /* ========== HTML小幫手為你新增的動畫效果 (Keyframes) ========== */
+        /* 1. 閃爍動畫 (Blink) */
+        @keyframes blinkText {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; } /* 變透明以達到閃爍感 */
+        }
+
+        /* 3. 脈衝放大動畫 (Pulse) */
+        @keyframes pulseBtn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); } /* 稍微放大 1.05倍 */
+        }
+
+        /* 4. 變色動畫 (Rainbow) */
+        @keyframes colorShift {
+            0% { color: var(--correct-color); text-shadow: 2px 2px 0px #fff; }
+            33% { color: #f1c40f; text-shadow: 2px 2px 0px #000; } /* 黃 */
+            66% { color: #e74c3c; text-shadow: 2px 2px 0px #fff; } /* 紅 */
+            100% { color: var(--correct-color); text-shadow: 2px 2px 0px #fff; }
+        }
+
+        /* 5. 金白閃爍動畫 (100%正確率專屬) */
+        @keyframes goldWhiteFlash {
+            0%, 100% { color: #FFD700; text-shadow: 2px 2px 0px #000; } /* 金色 + 黑色像素陰影 */
+            50% { color: #FFFFFF; text-shadow: 2px 2px 0px #B8860B; } /* 白色 + 暗金像素陰影 */
+        }
+
+        /* 6. 背景向上滾動動畫 */
+        @keyframes scrollBg {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 -2000px; } /* 往負的Y軸移動，製造向上攀升的錯覺 */
+        }
+
+        /* 💡 新增：7. 按鈕快速左右晃動動畫 */
+        
+        
+        /* 💡 新增：8. 彩虹背景變色動畫 */
+        @keyframes rainbowBg {
+            0% { background-color: #ff7675; } /* 柔和紅 */
+            20% { background-color: #fdcb6e; } /* 柔和橘黃 */
+            40% { background-color: #55efc4; } /* 柔和綠 */
+            60% { background-color: #74b9ff; } /* 柔和藍 */
+            80% { background-color: #a29bfe; } /* 柔和紫 */
+            100% { background-color: #ff7675; } /* 回到紅色，完美循環 */
+        }
+
+        /* 💡 修正：移除了不合法的 !important，讓瀏覽器願意執行這段動畫 */
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 
+                    -4px 0 0 0 #FFD700, 4px 0 0 0 #FFD700, 0 -4px 0 0 #FFD700, 0 4px 0 0 #FFD700, 
+                    0 0 8px 2px rgba(255, 215, 0, 0.4), 
+                    inset -4px -4px 0px 0px rgba(0,0,0,0.2), 
+                    inset 4px 4px 0px 0px rgba(255,255,255,0.7); 
+            }
+            50% {
+                box-shadow: 
+                    -4px 0 0 0 #FFD700, 4px 0 0 0 #FFD700, 0 -4px 0 0 #FFD700, 0 4px 0 0 #FFD700, 
+                    0 0 28px 10px rgba(255, 215, 0, 1), 
+                    inset -4px -4px 0px 0px rgba(0,0,0,0.2), 
+                    inset 4px 4px 0px 0px rgba(255,255,255,0.7); 
+            }
+        }
+
+        .rainbow-shake-btn {
+            /* 💡 終極組合技！同時執行「搖晃」、「彩虹變色」以及我們最新加入的「呼吸發光(pulseGlow)」 */
+            /* 我把呼吸發光的時間設為 1.5 秒，和搖晃的節奏同步，看起來會非常有生命力！ */
+            animation: quickShake 1.5s ease-in-out infinite, rainbowBg 4s linear infinite, pulseGlow 1.5s ease-in-out infinite;
+            
+            /* 加上白色的文字陰影讓字體更立體 */
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.7); 
+            
+            /* 💡 (原本這邊寫死的 box-shadow 已經刪除了，現在它由上面的 pulseGlow 動畫全面接管！) */
+        }
+
+        /* 💡 新增：確保按下按鈕時，奢華金邊依然存在，且光暈變得更亮產生回饋感 */
+        .rainbow-shake-btn:active {
+            box-shadow: 
+                -4px 0 0 0 #FFD700,
+                4px 0 0 0 #FFD700,
+                0 -4px 0 0 #FFD700,
+                0 4px 0 0 #FFD700,
+                0 0 20px 6px rgba(255, 215, 0, 0.8), /* 按下時光暈放大 */
+                inset 4px 4px 0px 0px rgba(0,0,0,0.4) !important;
+        }
+
+        /* 💡 新增：9. 風滾草動畫設定 */
+        .tumbleweed-container {
+            position: fixed;
+            bottom: 12%; /* 設定在畫面偏下的位置 */
+            left: 0;
+            width: 80px; /* 風滾草的大小，可自由調整 */
+            pointer-events: none; /* 確保它不會阻擋玩家點擊任何按鈕 */
+            z-index: 5; /* 讓它在畫面最上層滾過，增加立體感 */
+            animation: moveLeft 8s linear infinite; /* 8秒從右滾到左，不斷循環 */
+        }
+
+        .tumbleweed-container img {
+            width: 100%;
+            height: auto;
+            /* 組合位移與旋轉：確保 translateY 寫在 rotate 前面，這樣彈跳永遠是垂直的！ */
+            animation: rollBounce 2s linear infinite; 
+        }
+
+        @keyframes moveLeft {
+            0% { transform: translateX(110vw); } /* 從畫面最右邊外側出發 */
+            100% { transform: translateX(-30vw); } /* 滾到畫面最左邊外側消失 */
+        }
+
+        @keyframes rollBounce {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-40px) rotate(-90deg); } /* 大彈跳 */
+            50% { transform: translateY(0px) rotate(-180deg); }
+            75% { transform: translateY(-15px) rotate(-270deg); } /* 小彈跳，模仿不規則滾動 */
+            100% { transform: translateY(0px) rotate(-360deg); } /* 轉完一圈 */
+        }
+
+        /* --- 將動畫綁定到指定的 HTML 元素上 --- */
+        #start-screen h1 {
+            /* 綁定漂浮動畫：執行2秒、平滑進出、無限循環 */
+            animation: floatTitle 2.5s ease-in-out infinite; 
+        }
+
+        /* 💡 新增：首頁品牌 Logo 的樣式 */
+        .brand-logo {
+            max-width: 200px; /* 限制最大寬度，讓 Logo 保持精緻的大小 */
+            height: auto;     /* 高度自動依比例縮放 */
+            margin-bottom: 0px; /* 和下方的「PETZL知識王」標題保持一點呼吸空間 */
+        }
+
+        #start-btn {
+            /* 綁定脈衝動畫 */
+            animation: pulseBtn 2s infinite;
+        }
+        
+        .gold-flash-text {
+            /* 綁定金白閃爍動畫，你可以修改這裡的秒數！ */
+            animation: goldWhiteFlash 3s ease-in-out infinite;
+        }
+        /* ========================================================== */
+
+        /* 標題樣式 */
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #fff;
+            line-height: 1.4;
+        }
+
+        .pixel-btn {
+            font-family: inherit;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 12px 20px;
+            margin: 10px;
+            background-color: var(--btn-bg);
+            color: #000;
+            border: none;
+            cursor: pointer;
+            box-shadow: 
+                -4px 0 0 0 #000,
+                4px 0 0 0 #000,
+                0 -4px 0 0 #000,
+                0 4px 0 0 #000,
+                inset -4px -4px 0px 0px rgba(0,0,0,0.3),
+                inset 4px 4px 0px 0px rgba(255,255,255,0.8);
+            transition: transform 0.1s;
+            /* 新增：取消手機版點擊雙擊放大的延遲，讓按鈕反應更靈敏 */
+            touch-action: manipulation;
+        }
+
+        .pixel-btn:hover {
+            background-color: var(--btn-hover);
+        }
+
+        .pixel-btn:active {
+            background-color: var(--btn-active);
+            /* 按下時的按鈕反向陰影效果 */
+            box-shadow: 
+                -4px 0 0 0 #000,
+                4px 0 0 0 #000,
+                0 -4px 0 0 #000,
+                0 4px 0 0 #000,
+                inset 4px 4px 0px 0px rgba(0,0,0,0.4);
+            transform: translateY(2px);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 24px; /* 稍微加高一點，讓文字有空間呼吸 */
+            background-color: #000;
+            margin-bottom: 20px;
+            border: 2px solid #fff;
+            position: relative; /* 重要：設定為相對定位，當作文字疊加的基準點 */
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--correct-color);
+            transition: width 0.3s steps(10);
+        }
+
+        /* 新增進度條文字樣式 */
+        .progress-text {
+            position: absolute; /* 絕對定位，將文字疊加在進度條上方 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center; /* 水平置中 */
+            align-items: center; /* 垂直置中 */
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            /* 像素風格的文字描邊，讓數字不論在綠色或黑色背景都清晰可見 */
+            text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            z-index: 1; /* 確保文字浮在進度條色塊上面 */
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* 針對單欄或圖片選項的調整 */
+        .option-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            font-size: 1.1rem;
+            word-break: break-word;
+        }
+
+        .option-img {
+            max-width: 100%;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid #000;
+            image-rendering: pixelated; /* 讓圖片有像素顆粒感 */
+        }
+
+        @media (max-width: 480px) {
+            .options-grid {
+                grid-template-columns: 1fr; /* 手機版變為單排 */
+            }
+            
+            /* 新增：手機版專屬的進階排版優化 */
+            #game-container {
+                /* 💡 在這裡修改內容到邊框的距離！ 
+                   20px 是「上下」距離，15px 是「左右」距離。
+                   如果想讓按鈕更靠近邊界，可以把 15px 改小，例如改為 5px */
+                padding: 20px 20px; 
+                
+                /* 💡 如果你想修改整個遊戲框框到「手機螢幕真實邊界」的距離，
+                   可以把原本預設的 width: 95% 拿來這裡覆蓋。
+                   例如改成 98% 會讓框框更貼齊手機邊緣： */
+                 width: 85%; 
+            }
+            h1 {
+                font-size: 1.6rem; /* 標題稍微縮小 */
+                margin-bottom: 15px;
+            }
+            #question-text {
+                font-size: 1.2rem; /* 題目文字稍微縮小 */
+            }
+            
+            /* ========================================= */
+            /* 💡 在這裡修改「手機版」結算畫面的字體大小！ */
+            /* ========================================= */
+            
+            /*
+            #mission-complete-text {
+                font-size: 1.1rem !important; 
+            }
+            
+            #feedback-text {
+                font-size: 2.2rem !important; 
+            }
+            
+            #score-text {
+                font-size: 1.1rem !important;   最下方的答對率 
+            }
+            */
+
+            .pixel-btn {
+                padding: 10px 12px; /* 按鈕稍微變輕巧，避免擠出螢幕邊界 */
+                font-size: 1rem;
+            }
+            .answers-container {
+                font-size: 1rem; /* 答案列表的文字在手機版也稍微縮小 */
+            }
+        }
+
+        .answers-container {
+            /* 移除固定的 max-height: 220px; 修改為相對單位 vh */
+            max-height: 40vh; 
+            overflow-y: auto; /* 當內容超過高度時顯示垂直捲軸 */
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: var(--pixel-border);
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            /* 像素風自訂捲軸 (主要支援 Firefox 與基於 Webkit 的瀏覽器) */
+            scrollbar-width: thin;
+            scrollbar-color: var(--btn-bg) var(--ui-bg);
+        }
+        
+        .answers-container::-webkit-scrollbar {
+            width: 12px;
+        }
+        .answers-container::-webkit-scrollbar-track {
+            background: var(--ui-bg);
+            border-left: 2px solid #000;
+        }
+        .answers-container::-webkit-scrollbar-thumb {
+            background: var(--btn-bg);
+            border: 2px solid #000;
+        }
+
+        .answer-item {
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #555;
+            padding-bottom: 10px;
+        }
+        .answer-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        /* 新增題目文字樣式，讓它與答案有所區隔，增加閱讀層次 */
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #000;
+        }
+
+        /* 💡 新增：題目專屬圖片的樣式 */
+        .question-main-img {
+            width: 100%; /* 寬度填滿整個內部容器 */
+            max-height: 200px; /* 限制最高高度，避免圖片太大把選項擠到畫面外 */
+            object-fit: cover; /* 讓圖片填滿框框且不變形 (會自動裁切邊緣) */
+            border: var(--pixel-border); /* 加上我們預設的黑色粗邊框 */
+            margin-bottom: 15px; /* 距離下方的題目文字一點距離 */
+            /* 如果你希望圖片看起來也有像素顆粒感，可以把下面這行的註解拿掉 */
+            /* image-rendering: pixelated; */ 
+        }
+        
+        /* 使用群組選擇器 (,) 來統一玩家答案與正確答案的字體大小 */
+        .correct-answer-text, 
+        .user-answer-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .correct-answer-text {
+            color: var(--correct-color);
+        }
+        
+        .wrong-text {
+            color: var(--wrong-color);
+        }
+    </style>
+</head>
+<!-- 💡 新增：給 body 加上起始畫面的預設背景 class -->
+<body class="bg-start">
+
+    <div id="game-container">
+        
+        <!-- a. 起始歡迎頁面 -->
+        <div id="start-screen" class="screen active">
+            
+            <!-- 💡 新增：風滾草動畫元素 (放在這裡，開始遊戲時就會自動消失) -->
+            <div class="tumbleweed-container">
+                <img src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3OTA2ODAzX05ldyBQcm9qZWN0ICgxKS5wbmcucG5nIl1d.png?sha=b2f51f6fd8851ec0" alt="風滾草">
+            </div>
+
+            <!-- 💡 新增：品牌 Logo 圖片 -->
+            <img src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE0MDQyX1F1aXogTG9nbyAtIENvcHkucG5nLnBuZyJdXQ.png?sha=169907ecf1280432" alt="Petzl Logo" class="brand-logo">
+            <h1 style="font-size: 380%;">THE PETZL CHALLENGE</h1>
+            <!-- 加入了 font-weight: bold (粗體) 以及 text-shadow (像素風格的文字陰影) -->
+            <p style="margin-bottom: 30px; font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 0px #fff;">Can you send it, climber?<br><br>👇Click to start👇</p>
+            <button class="pixel-btn" id="start-btn">Climb On!</button>
+        </div>
+
+        <!-- b. 題目頁面 -->
+        <div id="quiz-screen" class="screen">
+            <!-- 最上方進度條 -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <!-- 新增：顯示趴數的文字標籤 -->
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+            
+            <!-- 💡 新增：題目專屬的主圖片，並套用我們剛寫好的 CSS 樣式 -->
+            <img src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzc5NDE3MTQ0X0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfaWxuZWN6aWxuZWN6aWxuZS5qcGcuanBlZyJdXQ.jpeg?sha=a1310a51e81e20d7" 
+                 alt="高山探險" 
+                 class="question-main-img" 
+                 id="question-img">
+
+            <!-- 上方題目 -->
+            <h2 id="question-text">題目載入中...</h2>
+            
+            <!-- 底下四個選項 (由 JS 動態生成) -->
+            <div class="options-grid" id="options-container">
+                <!-- 選項按鈕會插在這裡 -->
+            </div>
+        </div>
+
+        <!-- c. 結算畫面 -->
+        <div id="result-screen" class="screen">
+            <!-- 1. 最上方：任務完成 (小字體，加上文字陰影增添像素感) -->
+            <!-- 💡 在這裡修改「任務完成」的字體大小 -->
+            <p id="mission-complete-text" style="font-size: 150%; margin-bottom: 5px; font-weight: bold; text-shadow: 1px 1px 0px #fff;">NICE!🤜🤛</p>
+            
+            <!-- 2. 中間：評語 (大字體) -->
+            <!-- 💡 評語的字體大小是由 <h1> 標籤和 CSS 控制的。如果想要修改，可以在 CSS 裡找到 h1 { ... } 來調整，或是直接在這裡加上 style="font-size: 3rem;" -->
+            <h1 id="feedback-text" style="margin-bottom: 10px; font-size: 380%;"></h1>
+            
+            <!-- 3. 最下方：答對率 (小字體) -->
+            <!-- 💡 在這裡修改「答對率」的字體大小 -->
+            <h2 id="score-text" style="font-size: 130%; margin-bottom: 20px;">正確率: 0%</h2>
+            
+            <div id="answers-list" class="answers-container">
+                <!-- 正確答案清單會由 JS 動態生成並插入於此 -->
+            </div>
+            
+            <button class="pixel-btn" id="restart-btn">Try Again ↻</button>
+            
+            <!-- 💡 更新：將 flex-direction 改為 column，並使用 align-items: center 讓按鈕置中 -->
+            <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <!-- 💡 將原本的 shake-btn 替換成我們新寫的組合技 rainbow-shake-btn -->
+                <a href="https://www.instagram.com/petzl_taiwan/" target="_blank" class="pixel-btn rainbow-shake-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 200px; text-align: center;">📜  完  攀  秘  訣  📜</a>
+                <!-- 💡 將這顆按鈕的 width 從 200px 改為 140px (縮小約三分之一) -->
+                <a href="https://www.petzltw.com/" target="_blank" class="pixel-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 140px; text-align: center;">🌐官方網頁</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 遊戲資料設定 (包含文字選項與圖片選項) - 擴充至 10 
+        const quizData = [
+            {
+                question: "Petzl的意思是甚麼?",
+                // 💡 新增 mainImage：請在這裡雙引號內貼上第1題的圖片網址
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzM1OTkxX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfYTB2dG9zYTB2dG9zYTB2dC5qcGcuanBlZyJdXQ.jpeg?sha=356f2f758487a923",
+                options: [
+                    { text: "創辦人的姓氏", image: null, isCorrect: true },
+                    { text: "德國的扭結麵包", image: null, isCorrect: false },
+                    { text: "法文的花瓣", image: null, isCorrect: false },
+                    { text: "阿爾卑斯的小山村村名", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "GRIGRI的名稱由來為何?",
+                // 💡 第2題專屬圖片 (目前先放一樣的，等你來替換喔！)
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE2ODAzX1F1aXogUXVlc3Rpb24gcGljICg1KS5qcGcuanBlZyJdXQ.jpeg?sha=2552761bb876f294",
+                options: [
+                    { text: "來自非洲某處的好運符", image: null, isCorrect: true },
+                    { text: "確保器使用時發出的聲音", image: null, isCorrect: false },
+                    { text: "Good good的法文", image: null, isCorrect: false },
+                    { text: "Dirtbag確保時的肚子叫聲", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "以下最大的Petzl鉤環是哪個?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE1OTAzX1F1aXogUXVlc3Rpb24gcGljICg0KS5qcGcuanBlZyJdXQ.jpeg?sha=e078908425986799",
+                options: [
+                    { text: "William", image: null, isCorrect: true },
+                    { text: "Am’D", image: null, isCorrect: false },
+                    { text: "Sm’D", image: null, isCorrect: false },
+                    { text: "Rocha", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl沒有出過的產品",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODk5ODA0X1F1aXogUXVlc3Rpb24gcGljICgxNCkuanBnLmpwZWciXV0.jpeg?sha=71f3024b0cd00a3a",
+                options: [
+                    { text: "全自動攀岩確保器", image: null, isCorrect: true },
+                    { text: "上升器", image: null, isCorrect: false },
+                    { text: "抱石粉袋", image: null, isCorrect: false },
+                    { text: "越野跑頭燈", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl來自哪個國家",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3OTAyODMyX1F1aXogUXVlc3Rpb24gcGljICgxNSkuanBnLmpwZWciXV0.jpeg?sha=5fe1d5da4062892d",
+                
+                options: [
+                    { text: "法國", image: null, isCorrect: true },
+                    { text: "德國", image: null, isCorrect: false },
+                    { text: "加拿大", image: null, isCorrect: false },
+                    { text: "義大利", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "請指出正確的GRIGRI使用方式",
+                options: [
+                    { text: "", image:"https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYy5qcGcuanBlZyJdXQ.jpeg?sha=6b560f25a122b57d", isCorrect: true },
+                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMykuanBnLmpwZWciXV0.jpeg?sha=0c6933a7bb62cccf", isCorrect: false },
+                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMSkuanBnLmpwZWciXV0.jpeg?sha=da0579567b756018", isCorrect: false },
+                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMikuanBnLmpwZWciXV0.jpeg?sha=c5ffc68cdbb95cff", isCorrect: false }
+                ]
+            },
+            {
+                question: "何者是正確的Petzl品牌精神?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODIyNzAxX1F1aXogUXVlc3Rpb24gcGljICgxMykuanBnLmpwZWciXV0.jpeg?sha=455b9d7c5b8862bd",
+                options: [
+                    { text: "Access the inaccessible", image: null, isCorrect: true },
+                    { text: "Accept the unacceptable", image: null, isCorrect: false },
+                    { text: "Adore the unadorable", image: null, isCorrect: false },
+                    { text: "Argue the unarguable", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl的輕量化頭盔Sirocco設計最像哪個漫畫人物?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE3NjIyX1F1aXogUXVlc3Rpb24gcGljICg4KS5qcGcuanBlZyJdXQ.jpeg?sha=b9af8389631ec953",
+                options: [
+                    { text: "佛利札-七龍珠", image: null, isCorrect: true },
+                    { text: "蟻王-獵人", image: null, isCorrect: false },
+                    { text: "沙奈朵-神奇寶貝", image: null, isCorrect: false },
+                    { text: "戰槌巨人-進擊的巨人", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl的塑膠/織品類產品，例如吊帶、繩索、頭盔等，”最多”可以保存多久，就應該淘汰?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE5NzczX1F1aXogUXVlc3Rpb24gcGljICg2KS5qcGcuanBlZyJdXQ.jpeg?sha=6e194874d67353cc",                
+                options: [
+                    { text: "出廠後10年", image: null, isCorrect: true },
+                    { text: "出廠後5年", image: null, isCorrect: false },
+                    { text: "出廠後20年", image: null, isCorrect: false },
+                    { text: "出廠後25年", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl攀岩大使Sean Villanueva於2021年獨自完成了著名的Patagonia Fitz Roy Traverse，還獲得2022年的金冰斧獎。他將他的攀登路線命名為Moonwalk Traverse，原因是?",
+                // 💡 第10題專屬圖片
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzM2Njk3X0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfNjlpcjR2NjlpcjR2Njlpci5qcGcuanBlZyJdXQ.jpeg?sha=c33e163fdd527201",
+                options: [
+                    { text: "因為他爬的方向和第一次完成這條路線的Tommy Caldwell和Alex Honnold相反", image: null, isCorrect: true },
+                    { text: "他是Michael Jackson的粉絲", image: null, isCorrect: false },
+                    { text: "他爬的時候剛好是滿月", image: null, isCorrect: false },
+                    { text: "一個人爬像是在月球漫步很寂寞", image: null, isCorrect: false }
+                ]
+            }
+        ];
+
+        // 遊戲狀態變數
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = []; // 新增：用來記錄玩家每一題選的答案
+
+        // DOM 元素選取
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        // 💡 新增：把圖片標籤也選取起來，準備讓 JS 控制它
+        const questionImg = document.getElementById('question-img');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text'); // 新增：選取進度文字元素
+        
+        const scoreText = document.getElementById('score-text');
+        const feedbackText = document.getElementById('feedback-text');
+
+        const answersList = document.getElementById('answers-list');
+
+        
+        // 1. 開始遊戲
+        startBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = []; // 每次重新開始時，清空作答紀錄
+            // 💡 呼叫切換畫面時，傳入第三個參數：答題畫面的背景 class
+            switchScreen(startScreen, quizScreen, 'bg-quiz');
+            loadQuestion();
+        });
+
+        // 2. 載入題目與選項
+        function loadQuestion() {
+            const currentQuiz = quizData[currentQuestionIndex];
+            
+            // 更新題目文字
+            questionText.textContent = currentQuiz.question;
+            
+            // 💡 新增：更新這題專屬的主圖片！
+            // 檢查題庫中有沒有設定 mainImage，有的話就顯示對應的圖；如果不小心留空，就暫時隱藏圖片框避免破圖
+            if (currentQuiz.mainImage) {
+                questionImg.src = currentQuiz.mainImage;
+                questionImg.style.display = 'block';
+            } else {
+                questionImg.style.display = 'none';
+            }
+            
+            // 清空舊選項
+            optionsContainer.innerHTML = '';
+            
+            // 動態生成四個選項
+            currentQuiz.options.forEach((option) => {
+                const btn = document.createElement('button');
+                btn.classList.add('pixel-btn', 'option-btn');
+                
+                // 判斷是否為圖片選項
+                if (option.image) {
+                    const img = document.createElement('img');
+                    img.src = option.image;
+                    img.alt = option.text;
+                    img.className = 'option-img';
+                    btn.appendChild(img);
+                }
+                
+                // 加入文字
+                const span = document.createElement('span');
+                span.textContent = option.text;
+                btn.appendChild(span);
+                
+                // 綁定點擊事件 (檢查答案並換題)
+                // 這裡改為傳遞「整個 option 物件」，這樣才能記錄玩家到底選了什麼文字或圖片
+                btn.addEventListener('click', () => handleAnswer(option));
+                
+                optionsContainer.appendChild(btn);
+            });
+
+            updateProgress();
+        }
+
+        
+        // 3. 處理答題
+        function handleAnswer(selectedOption) {
+            // 第一時間把玩家選擇的選項記錄到陣列中
+            userAnswers.push(selectedOption); 
+
+            // 判斷該選項的 isCorrect 屬性是否為 true
+            if (selectedOption.isCorrect) {
+                score++;
+            }
+            
+            currentQuestionIndex++;
+            
+            // 檢查是否還有下一題
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion(); // 直接跳到下一題
+            } else {
+                updateProgress(); // 更新最後的進度條
+                setTimeout(showResults, 300); // 稍微延遲讓玩家看到進度條滿，再進入結算
+            }
+        }
+
+        // 4. 更新進度條
+        function updateProgress() {
+            // 計算百分比，並使用 Math.round() 四捨五入取整數
+            const progressPercentage = Math.round((currentQuestionIndex / quizData.length) * 100);
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}%`; // 更新畫面上的文字
+        }
+
+        // 5. 顯示結算畫面
+        function showResults() {
+            // 💡 呼叫切換畫面時，傳入第三個參數：結算畫面的背景 class
+            switchScreen(quizScreen, resultScreen, 'bg-result');
+            
+            // 計算正確率百分比 (四捨五入到整數)
+            const accuracyPercentage = Math.round((score / quizData.length) * 100);
+            scoreText.textContent = `正確率: ${accuracyPercentage}%`;
+            
+            // 判斷評語機制：滿分(10)、7-9分、0-6分
+            // 每次顯示前先移除金白動畫，避免前一次的設定殘留
+            scoreText.classList.remove('gold-flash-text');
+
+            if (score === quizData.length) {
+                feedbackText.textContent ="5.5 In My Gym";
+                feedbackText.style.color = "var(--correct-color)";
+                
+                // 正確率加上專屬的金白閃爍動畫！
+                scoreText.classList.add('gold-flash-text');
+            } else if (score >= 7 && score <= 9) {
+                feedbackText.textContent = "Almost There, What a Shame!";
+                feedbackText.style.color = "#e67e22"; 
+            } else {
+                feedbackText.textContent = "At Least You Tried, Gumby";
+                feedbackText.style.color = "inherit"; // 繼承原本的字體顏色
+            }
+
+            // 清空先前的答案內容 (防止重複遊玩時不斷疊加)
+            answersList.innerHTML = ''; 
+            
+            // 迴圈歷遍每一道題目 (加上 index 以便對應玩家的作答紀錄)
+            quizData.forEach((quiz, index) => {
+                // 使用陣列的 find() 方法，找出 isCorrect 屬性為 true 的那個選項
+                const correctOption = quiz.options.find(opt => opt.isCorrect);
+                // 透過 index，取出玩家在這一題選擇的答案
+                const userOption = userAnswers[index]; 
+                
+                // 創建每一題解答的外層容器
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'answer-item';
+                
+                // 題目文字
+                const qTitle = document.createElement('div');
+                qTitle.className = 'question-title'; /* 套用剛才新增的題目樣式 */
+                qTitle.textContent = quiz.question;
+                
+                // 玩家的答案文字區塊
+                const uText = document.createElement('div');
+                uText.className = 'user-answer-text';
+                
+                // 判斷玩家是不是選對了，並決定要顯示幾行資訊
+                if (userOption.isCorrect) {
+                    uText.classList.add('correct-answer-text');
+                    // 答對時，如果該選項剛好是圖片，也支援顯示圖片
+                    let userImgHtml = userOption.image ? `<br><img src="${userOption.image}" style="height:40px; margin-top:5px; border:2px solid #000; image-rendering: pixelated;">` : '';
+                    uText.innerHTML = `你的答案: ${userOption.text} ✅ ${userImgHtml}`;
+                    
+                    // 答對時，只組合「題目」與「你的答案」
+                    itemDiv.appendChild(qTitle);
+                    itemDiv.appendChild(uText); 
+                } else {
+                    uText.classList.add('wrong-text');
+                    // 如果玩家選錯的選項剛好是圖片，也把圖片印出來
+                    let userImgHtml = userOption.image ? `<br><img src="${userOption.image}" style="height:40px; margin-top:5px; border:2px solid #000; image-rendering: pixelated;">` : '';
+                    uText.innerHTML = `你的答案: ${userOption.text} ❌ ${userImgHtml}`;
+
+                    // 正確答案文字區塊
+                    const aText = document.createElement('div');
+                    aText.className = 'correct-answer-text';
+                    
+                    // 如果正確答案有圖片，則額外顯示像素小縮圖
+                    if (correctOption.image) {
+                        aText.innerHTML = `正確答案: ${correctOption.text} <br><img src="${correctOption.image}" style="height:40px; margin-top:5px; border:2px solid #000; image-rendering: pixelated;">`;
+                    } else {
+                        aText.textContent = `正確答案: ${correctOption.text}`;
+                    }
+                    
+                    // 答錯時，依序將「題目」、「玩家答案(錯)」、「正確答案」組合
+                    itemDiv.appendChild(qTitle);
+                    itemDiv.appendChild(uText); 
+                    itemDiv.appendChild(aText); 
+                }
+                
+                answersList.appendChild(itemDiv);
+            });
+        }
+
+        // 6. 重新開始遊戲
+        restartBtn.addEventListener('click', () => {
+            // 💡 呼叫切換畫面時，傳入第三個參數：回到起始畫面的背景 class
+            switchScreen(resultScreen, startScreen, 'bg-start');
+            progressBar.style.width = '0%'; // 重置進度條顯示
+            progressText.textContent = '0%'; // 重置進度文字
+        });
+
+        // 輔助函式：切換畫面顯示 (💡 更新：加入背景切換邏輯)
+        function switchScreen(hideElement, showElement, bgClass) {
+            hideElement.classList.remove('active');
+            showElement.classList.add('active');
+            
+            // 移除原本所有的背景 class
+            document.body.classList.remove('bg-start', 'bg-quiz', 'bg-result');
+            
+            // 如果有傳入新的背景 class，就幫 body 穿上它
+            if (bgClass) {
+                document.body.classList.add(bgClass);
+            }
+        }
+    </script>
+</body>
+</html>
