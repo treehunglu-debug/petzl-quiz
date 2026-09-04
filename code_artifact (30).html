@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>復古高山像素問答</title>
+    <!-- 引入開源的像素英文字型，中文字則依賴系統預設的黑體或像素風字型 -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pixel-border: 4px solid #000;
+            --bg-rock-dark: #3a3845;
+            --bg-rock-light: #4a4755;
+            --ui-bg: #c0cbdc;
+            --ui-text: #1a1a24;
+            --btn-bg: #8b9bb4;
+            --btn-hover: #a1b0c8;
+            --btn-active: #72829b;
+            --correct-color: #5b8c5a;
+            --wrong-color: #b33939; 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'VT323', "微軟正黑體", sans-serif;
+            background-color: var(--bg-rock-dark);
+            background-size: 100% auto; 
+            background-repeat: repeat-y; 
+            animation: scrollBg 100s linear infinite; 
+            transition: background-image 0.5s ease-in-out;
+            color: var(--ui-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 40px 0;
+            user-select: none;
+            position: relative; 
+        }
+
+        #game-container {
+            width: 95%;
+            max-width: 600px;
+            background-color: var(--ui-bg);
+            box-shadow: 
+                -4px 0 0 0 #000,
+                4px 0 0 0 #000,
+                0 -4px 0 0 #000,
+                0 4px 0 0 #000,
+                inset -4px -4px 0px 0px rgba(0,0,0,0.2),
+                inset 4px 4px 0px 0px rgba(255,255,255,0.7);
+            padding: 30px 20px;
+            position: relative;
+            text-align: center;
+            z-index: 10; 
+        }
+
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s steps(3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .bg-start {
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODEwNDQ2X1F1aXogU2VhbWxlc3MgQmFja2dvcnVuZCAwMS5qcGcuanBlZyJdXQ.jpeg?sha=0b7c7178f2a044d8');
+        }
+        
+        .bg-quiz {
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzEzMTEwX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfejZnZjlpejZnZjlpejZnZi5qcGcuanBlZyJdXQ.jpeg?sha=0c78c8a2dbb303ad');
+        }
+        
+        .bg-result {
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg4NTAzMjkxX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfdmgwbWJndmgwbWJndmgwbS5qcGcuanBlZyJdXQ.jpeg?sha=8b6bb605b7201659');
+        }
+
+        body.bg-result {
+            padding-bottom: 200px;
+        }
+
+        @keyframes pulseBtn {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); } 
+        }
+
+        @keyframes goldWhiteFlash {
+            0%, 100% { color: #FFD700; text-shadow: 2px 2px 0px #000; } 
+            50% { color: #FFFFFF; text-shadow: 2px 2px 0px #B8860B; } 
+        }
+
+        @keyframes scrollBg {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 -2000px; } 
+        }
+
+        @keyframes rainbowBg {
+            0% { background-color: #ff7675; } 
+            20% { background-color: #fdcb6e; } 
+            40% { background-color: #55efc4; } 
+            60% { background-color: #74b9ff; } 
+            80% { background-color: #a29bfe; } 
+            100% { background-color: #ff7675; } 
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 
+                    -4px 0 0 0 #FFD700, 4px 0 0 0 #FFD700, 0 -4px 0 0 #FFD700, 0 4px 0 0 #FFD700, 
+                    0 0 8px 2px rgba(255, 215, 0, 0.4), 
+                    inset -4px -4px 0px 0px rgba(0,0,0,0.2), 
+                    inset 4px 4px 0px 0px rgba(255,255,255,0.7); 
+            }
+            50% {
+                box-shadow: 
+                    -4px 0 0 0 #FFD700, 4px 0 0 0 #FFD700, 0 -4px 0 0 #FFD700, 0 4px 0 0 #FFD700, 
+                    0 0 28px 10px rgba(255, 215, 0, 1), 
+                    inset -4px -4px 0px 0px rgba(0,0,0,0.2), 
+                    inset 4px 4px 0px 0px rgba(255,255,255,0.7); 
+            }
+        }
+
+        .rainbow-shake-btn {
+            animation: rainbowBg 4s linear infinite, pulseGlow 1.5s ease-in-out infinite;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.7); 
+        }
+
+        .rainbow-shake-btn:active {
+            box-shadow: 
+                -4px 0 0 0 #FFD700, 4px 0 0 0 #FFD700, 0 -4px 0 0 #FFD700, 0 4px 0 0 #FFD700,
+                0 0 20px 6px rgba(255, 215, 0, 0.8), 
+                inset 4px 4px 0px 0px rgba(0,0,0,0.4) !important;
+        }
+
+        .brand-logo {
+            max-width: 200px; 
+            height: auto;     
+            margin-bottom: 0px; 
+        }
+
+        #start-btn {
+            animation: pulseBtn 2s infinite;
+        }
+        
+        .gold-flash-text {
+            animation: goldWhiteFlash 3s ease-in-out infinite;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #fff;
+            line-height: 1.4;
+        }
+
+        .pixel-btn {
+            font-family: inherit;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 12px 20px;
+            margin: 10px;
+            background-color: var(--btn-bg);
+            color: #000;
+            border: none;
+            cursor: pointer;
+            box-shadow: 
+                -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000,
+                inset -4px -4px 0px 0px rgba(0,0,0,0.3),
+                inset 4px 4px 0px 0px rgba(255,255,255,0.8);
+            transition: transform 0.1s;
+            touch-action: manipulation;
+        }
+
+        .pixel-btn:hover { background-color: var(--btn-hover); }
+        .pixel-btn:active {
+            background-color: var(--btn-active);
+            box-shadow: 
+                -4px 0 0 0 #000, 4px 0 0 0 #000, 0 -4px 0 0 #000, 0 4px 0 0 #000,
+                inset 4px 4px 0px 0px rgba(0,0,0,0.4);
+            transform: translateY(2px);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 24px;
+            background-color: #000;
+            margin-bottom: 20px;
+            border: 2px solid #fff;
+            position: relative; 
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--correct-color);
+            transition: width 0.3s steps(10);
+        }
+
+        .progress-text {
+            position: absolute; 
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+            z-index: 1; 
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            font-size: 1.1rem;
+            word-break: break-word;
+        }
+
+        .option-img {
+            max-width: 100%;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid #000;
+            image-rendering: pixelated; 
+        }
+
+        @media (max-width: 480px) {
+            .options-grid { grid-template-columns: 1fr; }
+            #game-container { padding: 20px 20px; width: 85%; }
+            h1 { font-size: 1.6rem; margin-bottom: 15px; }
+            #question-text { font-size: 1.2rem; }
+            .pixel-btn { padding: 10px 12px; font-size: 1rem; }
+            .answers-container { font-size: 1rem; }
+        }
+
+        .answers-container {
+            max-height: 40vh; 
+            overflow-y: auto; 
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: var(--pixel-border);
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--btn-bg) var(--ui-bg);
+        }
+        
+        .answers-container::-webkit-scrollbar { width: 12px; }
+        .answers-container::-webkit-scrollbar-track {
+            background: var(--ui-bg); border-left: 2px solid #000;
+        }
+        .answers-container::-webkit-scrollbar-thumb {
+            background: var(--btn-bg); border: 2px solid #000;
+        }
+
+        .answer-item {
+            margin-bottom: 15px; border-bottom: 2px dashed #555; padding-bottom: 10px;
+        }
+        .answer-item:last-child {
+            border-bottom: none; margin-bottom: 0; padding-bottom: 0;
+        }
+        
+        .question-title {
+            font-size: 1.25rem; font-weight: bold; margin-bottom: 8px; color: #000;
+        }
+
+        .question-main-img {
+            width: 100%; max-height: 200px; object-fit: cover; 
+            border: var(--pixel-border); margin-bottom: 15px; 
+        }
+        
+        .correct-answer-text, .user-answer-text {
+            font-size: 1.1rem; font-weight: bold; display: block; margin-top: 5px;
+        }
+        
+        .correct-answer-text { color: var(--correct-color); }
+        .wrong-text { color: var(--wrong-color); }
+
+        .result-character {
+            position: absolute; 
+            bottom: env(safe-area-inset-bottom, 20px);          
+            left: 40%;          
+            transform: translateX(-50%); 
+            z-index: 1;         
+            max-width: 320px;   
+            display: none;      
+            
+            /* 💡 修改 1：移除了 pointer-events: none; ，加上 cursor: pointer */
+            /* pointer-events: none; <-- 這行會讓圖片無法被點擊，所以要刪除它 */
+            cursor: pointer; /* 讓滑鼠移過去時變成手指，暗示這可以點擊 */
+        }
+
+        body.bg-result .result-character {
+            display: block;
+            animation: slideUpChar 0.8s ease-out forwards;
+        }
+
+        @keyframes slideUpChar {
+            from { transform: translate(-50%, 50px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-start">
+
+    <div id="game-container">
+        
+        <!-- a. 起始歡迎頁面 -->
+        <div id="start-screen" class="screen active">
+            <img src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE0MDQyX1F1aXogTG9nbyAtIENvcHkucG5nLnBuZyJdXQ.png?sha=169907ecf1280432" alt="Petzl Logo" class="brand-logo">
+            <h1 style="font-size: 380%;">THE PETZL CHALLENGE</h1>
+            <p style="margin-bottom: 30px; font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 0px #fff;">Can you send it, climber?<br><br>👇Click to start👇</p>
+            <button class="pixel-btn" id="start-btn">Climb On!</button>
+        </div>
+
+        <!-- b. 題目頁面 -->
+        <div id="quiz-screen" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+            
+            <img src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzc5NDE3MTQ0X0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfaWxuZWN6aWxuZWN6aWxuZS5qcGcuanBlZyJdXQ.jpeg?sha=a1310a51e81e20d7" 
+                 alt="高山探險" 
+                 class="question-main-img" 
+                 id="question-img">
+
+            <h2 id="question-text">題目載入中...</h2>
+            
+            <div class="options-grid" id="options-container">
+                <!-- 選項按鈕由 JS 產生 -->
+            </div>
+        </div>
+
+        <!-- c. 結算畫面 -->
+        <div id="result-screen" class="screen">
+            <p id="mission-complete-text" style="font-size: 150%; margin-bottom: 5px; font-weight: bold; text-shadow: 1px 1px 0px #fff;">NICE!🤜🤛</p>
+            
+            <h1 id="feedback-text" style="margin-bottom: 10px; font-size: 380%;"></h1>
+            
+            <h2 id="score-text" style="font-size: 130%; margin-bottom: 20px;">正確率: 0%</h2>
+            
+            <div id="answers-list" class="answers-container">
+                <!-- 正確答案清單由 JS 產生 -->
+            </div>
+            
+            <button class="pixel-btn" id="restart-btn">Try Again ↻</button>
+            
+            <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <a href="https://www.instagram.com/petzl_taiwan/" target="_blank" class="pixel-btn rainbow-shake-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 200px; text-align: center;">📜  完  攀  秘  訣  📜</a>
+                <a href="https://www.petzltw.com/" target="_blank" class="pixel-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 140px; text-align: center;">🌐官方網頁</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 結算畫面的背景彩蛋人物 (💡 已加上 ID 方便 JavaScript 找到它) -->
+    <img id="easter-egg-char" src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg4NTA4OTE0X05ldyBQcm9qZWN0ICg2KS5wbmcucG5nIl1d.png?sha=1dd4d16b402fc4e3" 
+         alt="隱藏背景人物" 
+         class="result-character">
+
+    <script>
+        const quizData = [
+            {
+                question: "Petzl的意思是甚麼?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzM1OTkxX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfYTB2dG9zYTB2dG9zYTB2dC5qcGcuanBlZyJdXQ.jpeg?sha=356f2f758487a923",
+                options: [
+                    { text: "法文的花瓣", image: null, isCorrect: false },
+                    { text: "德國的扭結麵包", image: null, isCorrect: false },
+                    { text: "創辦人的姓氏", image: null, isCorrect: true },
+                    { text: "阿爾卑斯的小山村村名", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "GRIGRI的名稱由來為何?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE2ODAzX1F1aXogUXVlc3Rpb24gcGljICg1KS5qcGcuanBlZyJdXQ.jpeg?sha=2552761bb876f294",
+                options: [
+                    { text: "Good good的法文", image: null, isCorrect: false },
+                    { text: "確保器使用時發出的聲音", image: null, isCorrect: false },
+                    { text: "Dirtbag確保時的肚子叫聲", image: null, isCorrect: false },
+                    { text: "來自非洲某處的好運符", image: null, isCorrect: true }
+                ]
+            },
+            {
+                question: "以下最大的Petzl鉤環是哪個?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE1OTAzX1F1aXogUXVlc3Rpb24gcGljICg0KS5qcGcuanBlZyJdXQ.jpeg?sha=e078908425986799",
+                options: [
+                    { text: "William", image: null, isCorrect: true },
+                    { text: "Am’D", image: null, isCorrect: false },
+                    { text: "Sm’D", image: null, isCorrect: false },
+                    { text: "Rocha", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl沒有出過的產品",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODk5ODA0X1F1aXogUXVlc3Rpb24gcGljICgxNCkuanBnLmpwZWciXV0.jpeg?sha=71f3024b0cd00a3a",
+                options: [
+                    { text: "上升器", image: null, isCorrect: false },
+                    { text: "全自動攀岩確保器", image: null, isCorrect: true },
+                    { text: "抱石粉袋", image: null, isCorrect: false },
+                    { text: "越野跑頭燈", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl來自哪個國家",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3OTAyODMyX1F1aXogUXVlc3Rpb24gcGljICgxNSkuanBnLmpwZWciXV0.jpeg?sha=5fe1d5da4062892d",
+                options: [
+                    { text: "義大利", image: null, isCorrect: false },
+                    { text: "德國", image: null, isCorrect: false },
+                    { text: "加拿大", image: null, isCorrect: false },
+                    { text: "法國", image: null, isCorrect: true }
+                ]
+            },
+            {
+                question: "請指出正確的GRIGRI使用方式",
+                options: [
+                    { text: "", image:"https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMSkuanBnLmpwZWciXV0.jpeg?sha=da0579567b756018", isCorrect: false },
+                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMykuanBnLmpwZWciXV0.jpeg?sha=0c6933a7bb62cccf", isCorrect: false },
+                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYy5qcGcuanBlZyJdXQ.jpeg?sha=6b560f25a122b57d", isCorrect: true },
+                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMikuanBnLmpwZWciXV0.jpeg?sha=c5ffc68cdbb95cff", isCorrect: false }
+                ]
+            },
+            {
+                question: "何者是正確的Petzl品牌精神?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODIyNzAxX1F1aXogUXVlc3Rpb24gcGljICgxMykuanBnLmpwZWciXV0.jpeg?sha=455b9d7c5b8862bd",
+                options: [
+                    { text: "Accept the unacceptable", image: null, isCorrect: false },
+                    { text: "Access the inaccessible", image: null, isCorrect: true },
+                    { text: "Adore the unadorable", image: null, isCorrect: false },
+                    { text: "Argue the unarguable", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl的輕量化頭盔Sirocco設計最像哪個漫畫人物?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE3NjIyX1F1aXogUXVlc3Rpb24gcGljICg4KS5qcGcuanBlZyJdXQ.jpeg?sha=b9af8389631ec953",
+                options: [
+                    { text: "沙奈朵-神奇寶貝", image: null, isCorrect: false },
+                    { text: "蟻王-獵人", image: null, isCorrect: false },
+                    { text: "佛利札-七龍珠", image: null, isCorrect: true },
+                    { text: "戰槌巨人-進擊的巨人", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl的塑膠/織品類產品，例如吊帶、繩索、頭盔等，”最多”可以保存多久，就應該淘汰?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE5NzczX1F1aXogUXVlc3Rpb24gcGljICg2KS5qcGcuanBlZyJdXQ.jpeg?sha=6e194874d67353cc",                
+                options: [
+                    { text: "出廠後4年", image: null, isCorrect: false},
+                    { text: "出廠後10年", image: null, isCorrect: true  },
+                    { text: "出廠後21年", image: null, isCorrect: false },
+                    { text: "出廠後25年", image: null, isCorrect: false }
+                ]
+            },
+            {
+                question: "Petzl攀岩大使Sean Villanueva於2021年獨自完成了著名的Patagonia Fitz Roy Traverse，還獲得2022年的金冰斧獎。他將他的攀登路線命名為Moonwalk Traverse，原因是?",
+                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzM2Njk3X0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfNjlpcjR2NjlpcjR2Njlpci5qcGcuanBlZyJdXQ.jpeg?sha=c33e163fdd527201",
+                options: [
+                    { text: "他是Michael Jackson的粉絲", image: null, isCorrect:false  },
+                    { text: "一個人爬像是在月球漫步很寂寞", image: null, isCorrect: false },
+                    { text: "他爬的時候剛好是滿月", image: null, isCorrect: false },
+                    { text: "因為他爬的方向和第一次完成這條路線的Tommy Caldwell和Alex Honnold相反", image: null, isCorrect: true }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        const questionImg = document.getElementById('question-img');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text'); 
+        
+        const scoreText = document.getElementById('score-text');
+        const feedbackText = document.getElementById('feedback-text');
+        const answersList = document.getElementById('answers-list');
+
+        // 💡 修改 2：準備好彩蛋人物的相關變數
+        const easterEggChar = document.getElementById('easter-egg-char');
+        const charOriginalImg = "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg4NTA4OTE0X05ldyBQcm9qZWN0ICg2KS5wbmcucG5nIl1d.png?sha=1dd4d16b402fc4e3";
+        const charSecretImg = "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg4NTEwMjY1X05ldyBQcm9qZWN0ICg3KS5wbmcucG5nIl1d.png?sha=44726fcd150ed620";
+
+        // 💡 修改 3：加上點擊人物的事件監聽器！
+        easterEggChar.addEventListener('click', () => {
+            easterEggChar.src = charSecretImg; // 點擊後替換為你提供的新圖片
+        });
+
+        // 1. 開始遊戲
+        startBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = []; 
+            switchScreen(startScreen, quizScreen, 'bg-quiz');
+            loadQuestion();
+        });
+
+        // 2. 載入題目與選項
+        function loadQuestion() {
+            const currentQuiz = quizData[currentQuestionIndex];
+            
+            questionText.textContent = currentQuiz.question;
+            
+            if (currentQuiz.mainImage) {
+                questionImg.src = currentQuiz.mainImage;
+                questionImg.style.display = 'block';
+            } else {
+                questionImg.style.display = 'none';
+            }
+            
+            optionsContainer.innerHTML = '';
+            
+            currentQuiz.options.forEach((option) => {
+                const btn = document.createElement('button');
+                btn.classList.add('pixel-btn', 'option-btn');
+                
+                if (option.image) {
+                    const img = document.createElement('img');
+                    img.src = option.image;
+                    img.alt = option.text;
+                    img.className = 'option-img';
+                    btn.appendChild(img);
+                }
+                
+                const span = document.createElement('span');
+                span.textContent = option.text;
+                btn.appendChild(span);
+                
+                btn.addEventListener('click', () => handleAnswer(option));
+                optionsContainer.appendChild(btn);
+            });
+
+            updateProgress();
+        }
+
+        // 3. 處理答題
+        function handleAnswer(selectedOption) {
+            userAnswers.push(selectedOption); 
+
+            if (selectedOption.isCorrect) {
+                score++;
+            }
+            
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion(); 
+            } else {
+                updateProgress(); 
+                setTimeout(showResults, 300); 
+            }
+        }
+
+        // 4. 更新進度條
+        function updateProgress() {
+            const progressPercentage = Math.round((currentQuestionIndex / quizData.length) * 100);
+            progressBar.style.width = `${progressPercentage}%`;
+            progressText.textContent = `${progressPercentage}%`; 
+        }
+
+        // 5. 顯示結算畫面
+        function showResults() {
+            switchScreen(quizScreen, resultScreen, 'bg-result');
+            
+            const accuracyPercentage = Math.round((score / quizData.length) * 100);
+            scoreText.textContent = `正確率: ${accuracyPercentage}%`;
+            
+            scoreText.classList.remove('gold-flash-text');
+
+            if (score === quizData.length) {
+                feedbackText.textContent ="5.5 In My Gym";
+                feedbackText.style.color = "var(--correct-color)";
+                scoreText.classList.add('gold-flash-text');
+            } else if (score >= 7 && score <= 9) {
+                feedbackText.textContent = "Almost There, What a Shame!";
+                feedbackText.style.color = "#e67e22"; 
+            } else {
+                feedbackText.textContent = "At Least You Tried, Gumby";
+                feedbackText.style.color = "inherit"; 
+            }
+
+            answersList.innerHTML = ''; 
+            
+            quizData.forEach((quiz, index) => {
+                const correctOption = quiz.options.find(opt => opt.isCorrect);
+                const userOption = userAnswers[index]; 
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'answer-item';
+                
+                const qTitle = document.createElement('div');
+                qTitle.className = 'question-title'; 
+                qTitle.textContent = quiz.question;
+                
+                const uText = document.createElement('div');
+                uText.className = 'user-answer-text';
+                
+                if (userOption.isCorrect) {
+                    uText.classList.add('correct-answer-text');
+                    let userImgHtml = userOption.image ? `<br><img src="${userOption.image}" style="height:40px; margin-top:5px; border:2px solid #000; image-rendering: pixelated;">` : '';
+                    uText.innerHTML = `你的答案: ${userOption.text} ✅ ${userImgHtml}`;
+                    
+                    itemDiv.appendChild(qTitle);
+                    itemDiv.appendChild(uText); 
+                } else {
+                    uText.classList.add('wrong-text');
+                    let userImgHtml = userOption.image ? `<br><img src="${userOption.image}" style="height:40px; margin-top:5px; border:2px solid #000; image-rendering: pixelated;">` : '';
+                    uText.innerHTML = `你的答案: ${userOption.text} ❌ ${userImgHtml}`;
+
+                    const aText = document.createElement('div');
+                    aText.className = 'correct-answer-text';
+                    
+                    if (correctOption.image) {
+                        aText.innerHTML = `正確答案: ${correctOption.text} <br><img src="${correctOption.image}" style="height:40px; margin-top:5px; border:2px solid #000; image-rendering: pixelated;">`;
+                    } else {
+                        aText.textContent = `正確答案: ${correctOption.text}`;
+                    }
+                    
+                    itemDiv.appendChild(qTitle);
+                    itemDiv.appendChild(uText); 
+                    itemDiv.appendChild(aText); 
+                }
+                
+                answersList.appendChild(itemDiv);
+            });
+        }
+
+        // 6. 重新開始遊戲
+        restartBtn.addEventListener('click', () => {
+            switchScreen(resultScreen, startScreen, 'bg-start');
+            progressBar.style.width = '0%'; 
+            progressText.textContent = '0%'; 
+
+            // 💡 修改 4：當玩家重新挑戰時，記得把彩蛋人物變回原本的圖案
+            easterEggChar.src = charOriginalImg; 
+        });
+
+        // 切換畫面與背景
+        function switchScreen(hideElement, showElement, bgClass) {
+            hideElement.classList.remove('active');
+            showElement.classList.add('active');
+            
+            document.body.classList.remove('bg-start', 'bg-quiz', 'bg-result');
+            
+            if (bgClass) {
+                document.body.classList.add(bgClass);
+            }
+        }
+    </script>
+</body>
+</html>
