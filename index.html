@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE PETZL CHALLENGE</title>
+    <title>戶外安全知識大挑戰</title>
     <!-- 引入開源的像素英文字型，中文字則依賴系統預設的黑體或像素風字型 -->
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <style>
@@ -75,11 +75,11 @@
         }
 
         .bg-start {
-            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODEwNDQ2X1F1aXogU2VhbWxlc3MgQmFja2dvcnVuZCAwMS5qcGcuanBlZyJdXQ.jpeg?sha=0b7c7178f2a044d8');
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzkzNjk3NDg5X0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfcHBnN25tcHBnN25tcHBnNyAoMSkuanBnLmpwZWciXV0.jpeg?sha=17b4c1c2eaf3e337');
         }
         
         .bg-quiz {
-            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzEzMTEwX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfejZnZjlpejZnZjlpejZnZi5qcGcuanBlZyJdXQ.jpeg?sha=0c78c8a2dbb303ad');
+            background-image: url('https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzkzNjk3NDA5X1F1aXogQmFja2dyb3VuZCAwMS5qcGcuanBlZyJdXQ.jpeg?sha=9150412d6536e2e7');
         }
         
         .bg-result {
@@ -300,6 +300,17 @@
         .correct-answer-text { color: var(--correct-color); }
         .wrong-text { color: var(--wrong-color); }
 
+        .explanation-text {
+            font-size: 1rem;
+            color: #1a1a24;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 8px 12px;
+            margin-top: 12px;
+            border-left: 4px solid var(--btn-hover);
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+
         .result-character {
             position: absolute; 
             bottom: env(safe-area-inset-bottom, 20px);          
@@ -332,9 +343,9 @@
         <!-- a. 起始歡迎頁面 -->
         <div id="start-screen" class="screen active">
             <img src="https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE0MDQyX1F1aXogTG9nbyAtIENvcHkucG5nLnBuZyJdXQ.png?sha=169907ecf1280432" alt="Petzl Logo" class="brand-logo">
-            <h1 style="font-size: 380%;">THE PETZL CHALLENGE</h1>
-            <p style="margin-bottom: 30px; font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 0px #fff;">Can you send it, climber?<br><br>👇Click to start👇</p>
-            <button class="pixel-btn" id="start-btn">Climb On!</button>
+            <h1 style="font-size: 280%; word-break: keep-all;">戶外安全知識大挑戰</h1>
+            <p style="margin-bottom: 30px; font-size: 1.3rem; font-weight: bold; text-shadow: 1px 1px 0px #fff;">上山之前，你準備好了嗎?<br><br>👇點擊開始👇</p>
+            <button class="pixel-btn" id="start-btn">起登!</button>
         </div>
 
         <!-- b. 題目頁面 -->
@@ -358,7 +369,7 @@
 
         <!-- c. 結算畫面 -->
         <div id="result-screen" class="screen">
-            <p id="mission-complete-text" style="font-size: 150%; margin-bottom: 5px; font-weight: bold; text-shadow: 1px 1px 0px #fff;">NICE!🤜🤛</p>
+            <p id="mission-complete-text" style="font-size: 150%; margin-bottom: 5px; font-weight: bold; text-shadow: 1px 1px 0px #fff;">🏔️平安到家才是登山的終點🏔️</p>
             
             <h1 id="feedback-text" style="margin-bottom: 10px; font-size: 380%;"></h1>
             
@@ -371,7 +382,7 @@
             <button class="pixel-btn" id="restart-btn">Try Again ↻</button>
             
             <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <a href="https://www.instagram.com/petzl_taiwan/" target="_blank" class="pixel-btn rainbow-shake-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 200px; text-align: center;">📜  完  攀  秘  訣  📜</a>
+                <a href="https://www.instagram.com/petzl_taiwan/" target="_blank" class="pixel-btn rainbow-shake-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 200px; text-align: center;">📜  登  頂  秘  訣  📜</a>
                 <a href="https://www.petzltw.com/" target="_blank" class="pixel-btn" style="text-decoration: none; font-size: 1rem; padding: 10px 15px; width: 140px; text-align: center;">🌐官方網頁</a>
             </div>
         </div>
@@ -386,102 +397,113 @@
     <script>
         const quizData = [
             {
-                question: "Petzl的意思是甚麼?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzM1OTkxX0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfYTB2dG9zYTB2dG9zYTB2dC5qcGcuanBlZyJdXQ.jpeg?sha=356f2f758487a923",
+                question: "登山的三三三原則是？",
+                mainImage: null,
+                explanation: "失溫只能撐三小時，所以發生意外時，保暖是首要考量！",
                 options: [
-                    { text: "法文的花瓣", image: null, isCorrect: false },
-                    { text: "德國的扭結麵包", image: null, isCorrect: false },
-                    { text: "創辦人的姓氏", image: null, isCorrect: true },
-                    { text: "阿爾卑斯的小山村村名", image: null, isCorrect: false }
+                    { text: "只要失溫三小時、缺水三天或是未進食三周，可能會有生命危險", image: null, isCorrect: true },
+                    { text: "在三千公尺走三公里，大概要花三小時", image: null, isCorrect: false },
+                    { text: "拉伸三十秒、拉三次然後跳三下可以解抽筋", image: null, isCorrect: false },
+                    { text: "距離超過30公尺、消失在你視線30秒、叫三次沒回應，代表隊友走太快了", image: null, isCorrect: false }
                 ]
             },
             {
-                question: "GRIGRI的名稱由來為何?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE2ODAzX1F1aXogUXVlc3Rpb24gcGljICg1KS5qcGcuanBlZyJdXQ.jpeg?sha=2552761bb876f294",
+                question: "登山時配戴一頂頭盔，有甚麼好處？",
+                mainImage: null,
+                explanation: "除了落石，頭盔也可以在墜落時保護頭部",
                 options: [
-                    { text: "Good good的法文", image: null, isCorrect: false },
-                    { text: "確保器使用時發出的聲音", image: null, isCorrect: false },
-                    { text: "Dirtbag確保時的肚子叫聲", image: null, isCorrect: false },
-                    { text: "來自非洲某處的好運符", image: null, isCorrect: true }
+                    { text: "降低落石傷害", image: null, isCorrect: false },
+                    { text: "跌倒時保護頭部", image: null, isCorrect: false },
+                    { text: "墜落時保護頭部", image: null, isCorrect: false },
+                    { text: "以上皆是", image: null, isCorrect: true }
                 ]
             },
             {
-                question: "以下最大的Petzl鉤環是哪個?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE1OTAzX1F1aXogUXVlc3Rpb24gcGljICg0KS5qcGcuanBlZyJdXQ.jpeg?sha=e078908425986799",
+                question: "以下哪個登山情境適合準備一頂頭盔？",
+                mainImage: null,
+                explanation: "出發前可以確認路線是否會經過碎石坡、或是有風險的攀爬地形，來決定是否攜帶頭盔",
                 options: [
-                    { text: "William", image: null, isCorrect: true },
-                    { text: "Am’D", image: null, isCorrect: false },
-                    { text: "Sm’D", image: null, isCorrect: false },
-                    { text: "Rocha", image: null, isCorrect: false }
+                    { text: "玉山主峰前碎石坡", image: null, isCorrect: false },
+                    { text: "雪季登雪山主峰", image: null, isCorrect: false },
+                    { text: "聖稜線品田斷崖", image: null, isCorrect: false },
+                    { text: "以上皆是", image: null, isCorrect: true }
                 ]
             },
             {
-                question: "Petzl沒有出過的產品",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODk5ODA0X1F1aXogUXVlc3Rpb24gcGljICgxNCkuanBnLmpwZWciXV0.jpeg?sha=71f3024b0cd00a3a",
+                question: "沒有登山頭盔，可以拿腳踏車頭盔去爬山嗎？",
+                mainImage: null,
+                explanation: "雖然都是保護頭部降低衝擊，登山頭盔的認證標準為EN12492，單車頭盔為EN1078，兩者標準不同，防護效果也略有不同。",
                 options: [
-                    { text: "上升器", image: null, isCorrect: false },
-                    { text: "全自動攀岩確保器", image: null, isCorrect: true },
-                    { text: "抱石粉袋", image: null, isCorrect: false },
-                    { text: "越野跑頭燈", image: null, isCorrect: false }
+                    { text: "可以，都是頭盔和登山頭盔一樣安全。", image: null, isCorrect: false },
+                    { text: "可以，雖然登山頭盔會更適合，但至少比沒戴好。", image: null, isCorrect: true },
+                    { text: "不行，兩個使用目的完全不一樣。", image: null, isCorrect: false },
+                    { text: "不行，腳踏車頭盔對落石完全沒有防禦效果。", image: null, isCorrect: false }
                 ]
             },
             {
-                question: "Petzl來自哪個國家",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3OTAyODMyX1F1aXogUXVlc3Rpb24gcGljICgxNSkuanBnLmpwZWciXV0.jpeg?sha=5fe1d5da4062892d",
+                question: "在台灣登山經常會碰到有人架好的拉繩，以下何者是比較安全的使用方式？",
+                mainImage: null,
+                explanation: "台灣有許多熱情的山友會在困難路段綁上輔助拉繩，但使用的繩索、繩結、綁繩的地方不一定都可靠，因此只建議當作輔助使用。若可以的話，同時多拉幾條可以增加安全性。",
                 options: [
-                    { text: "義大利", image: null, isCorrect: false },
-                    { text: "德國", image: null, isCorrect: false },
-                    { text: "加拿大", image: null, isCorrect: false },
-                    { text: "法國", image: null, isCorrect: true }
+                    { text: "將全身重量放在拉繩上", image: null, isCorrect: false },
+                    { text: "兩個人同時拉繩加速通過", image: null, isCorrect: false },
+                    { text: "拉繩有些磨損和老化沒關係，因為有人定期在維護", image: null, isCorrect: false },
+                    { text: "許可的話一次多抓幾條繩子，並先用力拉幾下做測試", image: null, isCorrect: true }
                 ]
             },
             {
-                question: "請指出正確的GRIGRI使用方式",
+                question: "選購頭盔、鉤環、繩索等安全裝備時，以下何者是錯誤的觀念？",
+                mainImage: null,
+                explanation: "頭盔、鉤環、繩索等裝備屬於保護我們生命的裝備(PPE)，務必選擇有認證的產品，才是珍惜生命的作為喔",
                 options: [
-                    { text: "", image:"https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMSkuanBnLmpwZWciXV0.jpeg?sha=da0579567b756018", isCorrect: false },
-                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMykuanBnLmpwZWciXV0.jpeg?sha=0c6933a7bb62cccf", isCorrect: false },
-                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYy5qcGcuanBlZyJdXQ.jpeg?sha=6b560f25a122b57d", isCorrect: true },
-                    { text: "", image: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzMyNDc3X1F1aXogb3B0aW9uIHBpYyAoMikuanBnLmpwZWciXV0.jpeg?sha=c5ffc68cdbb95cff", isCorrect: false }
+                    { text: "選擇有認證的商品，例如CE認證、UIAA認證等", image: null, isCorrect: false },
+                    { text: "在可靠的管道購買，例如品牌授權經銷商", image: null, isCorrect: false },
+                    { text: "只是偶爾使用沒有認證沒關係，選擇便宜的裝備就好", image: null, isCorrect: true },
+                    { text: "來路不明且沒有認證的產品，可能導致生命危險", image: null, isCorrect: false }
                 ]
             },
             {
-                question: "何者是正確的Petzl品牌精神?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODIyNzAxX1F1aXogUXVlc3Rpb24gcGljICgxMykuanBnLmpwZWciXV0.jpeg?sha=455b9d7c5b8862bd",
+                question: "以下哪個行程不一定要攜帶頭燈？",
+                mainImage: null,
+                explanation: "即使是一天的登山行程，頭燈都應該是必備的裝備",
                 options: [
-                    { text: "Accept the unacceptable", image: null, isCorrect: false },
-                    { text: "Access the inaccessible", image: null, isCorrect: true },
-                    { text: "Adore the unadorable", image: null, isCorrect: false },
-                    { text: "Argue the unarguable", image: null, isCorrect: false }
+                    { text: "四天玉山群峰看日出", image: null, isCorrect: false },
+                    { text: "兩天加羅湖野營", image: null, isCorrect: false },
+                    { text: "一天加里山賞雲海", image: null, isCorrect: false },
+                    { text: "有路燈的河濱公園散步", image: null, isCorrect: true }
                 ]
             },
             {
-                question: "Petzl的輕量化頭盔Sirocco設計最像哪個漫畫人物?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE3NjIyX1F1aXogUXVlc3Rpb24gcGljICg4KS5qcGcuanBlZyJdXQ.jpeg?sha=b9af8389631ec953",
+                question: "手機已經有手電筒了，為什麼頭燈還是必備的登山裝備？",
+                mainImage: null,
+                explanation: "在山上有光才有希望",
                 options: [
-                    { text: "沙奈朵-神奇寶貝", image: null, isCorrect: false },
-                    { text: "蟻王-獵人", image: null, isCorrect: false },
-                    { text: "佛利札-七龍珠", image: null, isCorrect: true },
-                    { text: "戰槌巨人-進擊的巨人", image: null, isCorrect: false }
+                    { text: "節省手機電源用於通訊", image: null, isCorrect: false },
+                    { text: "空出雙手方便行動更安全", image: null, isCorrect: false },
+                    { text: "單日行程也可能碰到受傷、走錯路等意外，導致無法在天亮前下山", image: null, isCorrect: false },
+                    { text: "以上皆是", image: null, isCorrect: true }
                 ]
             },
             {
-                question: "Petzl的塑膠/織品類產品，例如吊帶、繩索、頭盔等，”最多”可以保存多久，就應該淘汰?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3ODE5NzczX1F1aXogUXVlc3Rpb24gcGljICg2KS5qcGcuanBlZyJdXQ.jpeg?sha=6e194874d67353cc",                
+                question: "登山頭燈的紅光用途是甚麼？",
+                mainImage: null,
+                explanation: "紅光和生命安全不一定直接相關，但和人際安全息息相關",
                 options: [
-                    { text: "出廠後4年", image: null, isCorrect: false},
-                    { text: "出廠後10年", image: null, isCorrect: true  },
-                    { text: "出廠後21年", image: null, isCorrect: false },
-                    { text: "出廠後25年", image: null, isCorrect: false }
+                    { text: "製造氛圍感", image: null, isCorrect: false },
+                    { text: "紅光更亮", image: null, isCorrect: false },
+                    { text: "紅光的光線柔和，在夜間比較不打擾他人", image: null, isCorrect: true },
+                    { text: "以上皆是", image: null, isCorrect: false }
                 ]
             },
             {
-                question: "Petzl攀岩大使Sean Villanueva於2021年獨自完成了著名的Patagonia Fitz Roy Traverse，還獲得2022年的金冰斧獎。他將他的攀登路線命名為Moonwalk Traverse，原因是?",
-                mainImage: "https://cdn-general.cybassets.com/media/W1siZiIsIjMzOTY4L2F0dGFjaGVkX3Bob3Rvcy8xNzg3NzM2Njk3X0dlbWluaV9HZW5lcmF0ZWRfSW1hZ2VfNjlpcjR2NjlpcjR2Njlpci5qcGcuanBlZyJdXQ.jpeg?sha=c33e163fdd527201",
+                question: "以下何者是使用頭燈的壞習慣？",
+                mainImage: null,
+                explanation: "如果喜歡開到最亮，你可能要多準備一些電池",
                 options: [
-                    { text: "他是Michael Jackson的粉絲", image: null, isCorrect:false  },
-                    { text: "一個人爬像是在月球漫步很寂寞", image: null, isCorrect: false },
-                    { text: "他爬的時候剛好是滿月", image: null, isCorrect: false },
-                    { text: "因為他爬的方向和第一次完成這條路線的Tommy Caldwell和Alex Honnold相反", image: null, isCorrect: true }
+                    { text: "總是開到最亮，看得遠更安全", image: null, isCorrect: true },
+                    { text: "根據狀況切換亮度，大部分用低亮度，必要時才調亮", image: null, isCorrect: false },
+                    { text: "半夜在山屋起床上廁所時，開紅光避免打擾他人", image: null, isCorrect: false },
+                    { text: "白天將開關鎖定，避免在包包裡壓到開關浪費電源", image: null, isCorrect: false }
                 ]
             }
         ];
@@ -599,14 +621,14 @@
             scoreText.classList.remove('gold-flash-text');
 
             if (score === quizData.length) {
-                feedbackText.textContent ="5.5 In My Gym";
+                feedbackText.textContent ="輕輕鬆鬆，臉不紅氣不喘!";
                 feedbackText.style.color = "var(--correct-color)";
                 scoreText.classList.add('gold-flash-text');
             } else if (score >= 7 && score <= 9) {
-                feedbackText.textContent = "Almost There, What a Shame!";
+                feedbackText.textContent = "看來你是個練武奇才!";
                 feedbackText.style.color = "#e67e22"; 
             } else {
-                feedbackText.textContent = "At Least You Tried, Gumby";
+                feedbackText.textContent = "山永遠都在，準備好再來";
                 feedbackText.style.color = "inherit"; 
             }
 
@@ -650,6 +672,14 @@
                     itemDiv.appendChild(qTitle);
                     itemDiv.appendChild(uText); 
                     itemDiv.appendChild(aText); 
+                }
+                
+                // 新增解題說明的 UI 元素
+                if (quiz.explanation) {
+                    const expDiv = document.createElement('div');
+                    expDiv.className = 'explanation-text';
+                    expDiv.innerHTML = `💡 <strong>解題說明：</strong><br>${quiz.explanation}`;
+                    itemDiv.appendChild(expDiv);
                 }
                 
                 answersList.appendChild(itemDiv);
